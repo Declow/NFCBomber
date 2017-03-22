@@ -18,13 +18,15 @@
         android:id="@+id/hostButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/HostGameButton" />
+        android:text="@string/HostGameButton"
+        android:onClick="onHost" />
 
     <TextView
         android:id="@+id/joinText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/joinExistingGame" />
+        android:text="@string/joinExistingGame"
+        android:onClick="onJoin"/>
 
     <Button
         android:id="@+id/joinButton"
