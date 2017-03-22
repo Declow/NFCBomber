@@ -3,6 +3,7 @@ package dk.sdu.mmmi.ap.g14.nfcbomber;
 import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.Formatter;
@@ -10,7 +11,14 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Enumeration;
 
 public class Lobby extends AppCompatActivity {
 
@@ -34,22 +42,13 @@ public class Lobby extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(), "No wifi connection", Toast.LENGTH_LONG);
             toast.show();
         } else {
-            showInfo(Integer.toString(ip));
+            showInfo();
         }
     }
 
-    private void showInfo(String ip){
-        TextView ipAddress = (TextView) findViewById(R.id.ip_address);
-        String ipString = "";
-        try {
-            ipString = InetAddress.getLocalHost().getHostAddress();
-            ipAddress.setText(ipString);
-        } catch (Exception e) {
-            Log.wtf(TAG, e.toString());
-            Log.wtf(TAG, "Unable to get ip");
-            ipAddress.setText("Unable to get ip");
-        }
-
+    private void showInfo() {
+        TextView text = (TextView) findViewById(R.id.ip_address);
+        text.setText(getLocalIpAddress());
     }
 
     private int checkWifi() {
@@ -59,4 +58,22 @@ public class Lobby extends AppCompatActivity {
         Log.wtf("WIFI ", Integer.toString(ip));
         return ip;
     }
+
+    public static String getLocalIpAddress() {
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
+                        return inetAddress.getHostAddress();
+                    }
+                }
+            }
+        } catch (SocketException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
 }
