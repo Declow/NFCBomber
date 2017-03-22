@@ -1,39 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="dk.sdu.mmmi.ap.g14.nfcbomber.Game">
 
     <TextView
+        android:id="@+id/text_yourIP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your IP address is:"/>
+        android:text="@string/your_ip"/>
 
     <TextView
         android:id="@+id/ip_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/text_yourIP"
         android:text="@string/loading"
-        android:textSize="20dp" />
+        android:textSize="20sp"/>
 
     <TextView
+        android:id="@+id/text_hostIntro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_below="@+id/ip_address"
         android:text="@string/host_intro"/>
 
     <TextView
+        android:id="@+id/text_connectedDevices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/text_hostIntro"
         android:layout_marginTop="20dp"
-        android:text="Connected devices:"
+        android:text="@string/connected_devices"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/connectedDevices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/loading"/>
+        android:layout_below="@+id/text_connectedDevices"
+        android:text="@string/loading" />
 
-</LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:text="@string/start_game"/>
+
+</RelativeLayout>
