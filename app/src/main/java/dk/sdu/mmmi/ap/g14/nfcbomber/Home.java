@@ -8,10 +8,8 @@ import android.view.View;
 public class Home extends AppCompatActivity {
 
     public static final String GAME_SETUP = "gameSetup";
-
-    public enum gameType {
-        host, client
-    }
+    public static final String GAME_HOST = "host";
+    public static final String GAME_CLIENT = "client";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +19,13 @@ public class Home extends AppCompatActivity {
 
     public void onHost(View v) {
         Intent intent = new Intent(this, Game.class);
-        intent.putExtra(GAME_SETUP, gameType.host);
+        intent.putExtra(GAME_SETUP, GAME_HOST);
         startActivity(intent);
     }
 
     public void onJoin(View v) {
         Intent intent = new Intent(this, Game.class);
-        intent.putExtra(GAME_SETUP, gameType.client);
+        intent.putExtra(GAME_SETUP, GAME_CLIENT);
         startActivity(intent);
     }
 }
