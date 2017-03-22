@@ -16,8 +16,10 @@ public class Game extends AppCompatActivity {
 
         Intent intent = getIntent();
         String gameType = intent.getStringExtra(Home.GAME_SETUP);
-
-        setTitle("NFCBomber " + gameType);
+        if (gameType.equals(Home.GAME_HOST))
+            setTitle(getResources().getString(R.string.app_name) + getResources().getString(R.string.app_type_host));
+        else
+            setTitle(getResources().getString(R.string.app_name) + getResources().getString(R.string.app_type_client));
 
         Log.v(TAG, gameType);
     }
