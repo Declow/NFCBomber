@@ -23,7 +23,7 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onJoin(View v) {
+    public void onClient(View v) {
         Intent intent = new Intent(this, Game.class);
         intent.putExtra(GAME_SETUP, GAME_CLIENT);
         startActivity(intent);

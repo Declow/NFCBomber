@@ -25,12 +25,12 @@
         android:id="@+id/joinText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/joinExistingGame"
-        android:onClick="onJoin"/>
+        android:text="@string/joinExistingGame" />
 
     <Button
         android:id="@+id/joinButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/JoinExistingGameButton" />
+        android:text="@string/JoinExistingGameButton"
+        android:onClick="onClient"/>
 </LinearLayout>
