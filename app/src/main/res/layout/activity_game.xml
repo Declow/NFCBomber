@@ -8,15 +8,17 @@
     tools:context="dk.sdu.mmmi.ap.g14.nfcbomber.Game">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/current_bomb_time"
         android:layout_marginTop="50dp"
-        android:textSize="20sp"
+        android:text="@string/current_bomb_time"
+        android:textAlignment="center"
         android:textAllCaps="true"
-        android:textAlignment="center" />
+        android:textSize="20sp" />
 
     <TextView
+        android:id="@+id/bomb_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/start_time"
@@ -24,6 +26,7 @@
         android:textSize="70sp"/>
 
     <TextView
+        android:id="@+id/bomb_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/drop_info"

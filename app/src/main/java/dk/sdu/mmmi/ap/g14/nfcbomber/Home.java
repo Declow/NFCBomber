@@ -18,13 +18,13 @@ public class Home extends AppCompatActivity {
     }
 
     public void onHost(View v) {
-        Intent intent = new Intent(this, Game.class);
+        Intent intent = new Intent(this, Lobby.class);
         intent.putExtra(GAME_SETUP, GAME_HOST);
         startActivity(intent);
     }
 
     public void onClient(View v) {
-        Intent intent = new Intent(this, Game.class);
+        Intent intent = new Intent(this, Lobby.class);
         intent.putExtra(GAME_SETUP, GAME_CLIENT);
         startActivity(intent);
     }

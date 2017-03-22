@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     android:orientation="vertical"
-    tools:context="dk.sdu.mmmi.ap.g14.nfcbomber.Game">
+    tools:context="dk.sdu.mmmi.ap.g14.nfcbomber.Lobby">
 
     <TextView
         android:id="@+id/text_yourIP"
