@@ -19,4 +19,6 @@
         <activity android:name=".Game"></activity>
     </application>
 
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
 </manifest>

@@ -1,9 +1,12 @@
 package dk.sdu.mmmi.ap.g14.nfcbomber;
 
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 public class Game extends AppCompatActivity {
 
@@ -21,6 +24,19 @@ public class Game extends AppCompatActivity {
         else
             setTitle(getResources().getString(R.string.app_name) + getResources().getString(R.string.app_type_client));
 
-        Log.v(TAG, gameType);
+        Log.wtf(TAG, gameType);
+        int ip = checkWifi();
+        if (ip == 0) {
+            Toast toast = Toast.makeText(getApplicationContext(), "No wifi connection", Toast.LENGTH_LONG);
+            toast.show();
+        }
+    }
+
+    private int checkWifi() {
+        WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        WifiInfo wifiInfo = wifi.getConnectionInfo();
+        int ip = wifiInfo.getIpAddress();
+        Log.wtf("WIFI ", Integer.toString(ip));
+        return ip;
     }
 }
