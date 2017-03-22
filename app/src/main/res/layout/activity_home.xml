@@ -25,7 +25,7 @@
         android:id="@+id/joinText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/joinExistingGame" />
+        android:text="@string/joinExistingGame"/>
 
     <Button
         android:id="@+id/joinButton"
