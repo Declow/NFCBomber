@@ -6,4 +6,9 @@
     <string name="HostGameButton">Host</string>
     <string name="joinExistingGame">Join existing game</string>
     <string name="JoinExistingGameButton">Join</string>
+    <string name="host_intro">You are the host of the game. To connect with clients, simply put your
+        device close to your friends\' devices. The devices will then exchange data and your friends
+        should appear below.
+    </string>
+    <string name="loading">Loading</string>
 </resources>
