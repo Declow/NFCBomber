@@ -9,26 +9,26 @@
     tools:context="dk.sdu.mmmi.ap.g14.nfcbomber.Home">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/hostText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="@string/HostGame" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/hostButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="@string/HostGameButton" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/joinText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="@string/joinExistingGame" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/joinButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="@string/JoinExistingGameButton" />
 </LinearLayout>

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">NFCBomber</string>
+    <string name="HostGame">Host game for NFCBomber</string>
+    <string name="HostGameButton">Host</string>
+    <string name="joinExistingGame">Join existing game</string>
+    <string name="JoinExistingGameButton">Join</string>
 </resources>
