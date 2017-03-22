@@ -5,8 +5,12 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.Formatter;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.net.InetAddress;
 
 public class Game extends AppCompatActivity {
 
@@ -29,7 +33,23 @@ public class Game extends AppCompatActivity {
         if (ip == 0) {
             Toast toast = Toast.makeText(getApplicationContext(), "No wifi connection", Toast.LENGTH_LONG);
             toast.show();
+        } else {
+            showInfo(Integer.toString(ip));
         }
+    }
+
+    private void showInfo(String ip){
+        TextView ipAddress = (TextView) findViewById(R.id.ip_address);
+        String ipString = "";
+        try {
+            ipString = InetAddress.getLocalHost().getHostAddress();
+            ipAddress.setText(ipString);
+        } catch (Exception e) {
+            Log.wtf(TAG, e.toString());
+            Log.wtf(TAG, "Unable to get ip");
+            ipAddress.setText("Unable to get ip");
+        }
+
     }
 
     private int checkWifi() {
