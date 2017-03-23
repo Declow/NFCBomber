@@ -53,14 +53,14 @@ public class Lobby extends AppCompatActivity implements callBacks {
         return ip;
     }
 
-    public String getLocalIpAddress() {
+    private InetAddress getInetAddress() {
         try {
             for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
                 NetworkInterface intf = en.nextElement();
                 for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
                     InetAddress inetAddress = enumIpAddr.nextElement();
                     if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
-                        return inetAddress.getHostAddress();
+                        return inetAddress;
                     }
                 }
             }
@@ -68,6 +68,10 @@ public class Lobby extends AppCompatActivity implements callBacks {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    private String getLocalIpAddress() {
+        return getInetAddress().getHostAddress();
     }
 
     @Override
