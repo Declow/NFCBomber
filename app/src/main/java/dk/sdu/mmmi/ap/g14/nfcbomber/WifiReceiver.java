@@ -21,7 +21,6 @@ public class WifiReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.wtf("Wifi", "Receiver!");
         callBack.connectionChanged();
     }
 }
