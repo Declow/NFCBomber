@@ -4,27 +4,38 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcEvent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
-public class Lobby extends AppCompatActivity implements callBacks {
+public class Lobby extends AppCompatActivity implements callBacks, NfcAdapter.CreateNdefMessageCallback {
 
     private static final String TAG = "Lobby";
     WifiReceiver receiver;
+    NfcAdapter mNfcAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host);
 
+        //wifiReceiver
         Intent intent = getIntent();
         IntentFilter inf = new IntentFilter();
         inf.addAction("android.net.wifi.STATE_CHANGE");
@@ -32,6 +43,15 @@ public class Lobby extends AppCompatActivity implements callBacks {
         receiver = new WifiReceiver(this);
 
         this.registerReceiver(receiver, inf);
+
+        //NFC checker
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if (mNfcAdapter == null) {
+            Toast.makeText(this, "NFC is not available", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
 
         String gameType = intent.getStringExtra(Home.GAME_SETUP);
         if (gameType.equals(Home.GAME_HOST))
@@ -85,5 +105,27 @@ public class Lobby extends AppCompatActivity implements callBacks {
             text.setText(R.string.loading);
             b.setEnabled(false);
         }
+    }
+
+    @Override
+    public NdefMessage createNdefMessage(NfcEvent e) {
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] msg = new byte[1];
+        try {
+            ObjectOutputStream os = new ObjectOutputStream(out);
+            os.writeObject(getInetAddress());
+            msg = new byte[out.toByteArray().length];
+            msg = out.toByteArray();
+            os.close();
+            out.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+        return new NdefMessage(
+                new NdefRecord[] { NdefRecord.createMime(
+                        "application/dk.sdu.mmmi.ap.g14.nfcbomber", msg)
+                });
     }
 }
