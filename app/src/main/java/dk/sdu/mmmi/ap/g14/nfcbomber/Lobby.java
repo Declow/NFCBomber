@@ -118,22 +118,23 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
     @Override
     public NdefMessage createNdefMessage(NfcEvent e) {
 
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        byte[] msg = new byte[1];
-        try {
-            ObjectOutputStream os = new ObjectOutputStream(out);
-            os.writeObject(getInetAddress());
-            msg = out.toByteArray();
-            os.close();
-            out.close();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
+//        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//        byte[] msg = new byte[1];
+//        try {
+//            ObjectOutputStream os = new ObjectOutputStream(out);
+//            os.writeObject(getInetAddress());
+//            msg = out.toByteArray();
+//            os.close();
+//            out.close();
+//        } catch (IOException e1) {
+//            e1.printStackTrace();
+//        }
+        String text = "Hello world, and NFC. Beam time: "+System.currentTimeMillis();
 
         return new NdefMessage(
                 new NdefRecord[] { NdefRecord.createMime(
-                        "application/dk.sdu.mmmi.ap.g14.nfcbomber", msg)
-                        ,NdefRecord.createApplicationRecord("dk.sdu.mmmi.ap.g14.nfcbomber")
+                        "application/dk.sdu.mmmi.ap.g14.nfcbomber", text.getBytes()),
+                        NdefRecord.createApplicationRecord("dk.sdu.mmmi.ap.g14.nfcbomber")
                 });
     }
 
