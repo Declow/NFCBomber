@@ -36,7 +36,7 @@ public class Game extends AppCompatActivity {
         if(secs <10 && secs > 0){
             seconds = "0"+seconds;
         }
-        
+
 
         /* Convert minutes to string */
         mins = mins % 60;
