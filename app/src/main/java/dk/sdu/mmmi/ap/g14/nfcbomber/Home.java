@@ -67,6 +67,12 @@ public class Home extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onNewIntent(Intent intent) {
+        // onResume gets called after this to handle the intent
+        setIntent(intent);
+    }
+
     void processIntent(Intent intent) {
 //        Intent myIntent = new Intent(this, Lobby.class);
 //        myIntent.putExtra(GAME_SETUP, GAME_CLIENT);
