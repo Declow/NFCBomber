@@ -105,7 +105,7 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
             text.setText(getLocalIpAddress());
             b.setEnabled(true);
         } else {
-            text.setText(R.string.loading);
+            text.setText(R.string.wait_wifi);
             b.setEnabled(false);
         }
     }
