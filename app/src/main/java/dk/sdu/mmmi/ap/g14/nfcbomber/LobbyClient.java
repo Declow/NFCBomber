@@ -76,7 +76,7 @@ public class LobbyClient extends AppCompatActivity implements CallBacks {
         }
 
         if (inet != null) {
-            //connectToHost(inet);
+            connectToHost(inet);
         }
     }
 

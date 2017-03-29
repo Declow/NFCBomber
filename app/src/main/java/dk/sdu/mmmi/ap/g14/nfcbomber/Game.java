@@ -71,7 +71,7 @@ public class Game extends AppCompatActivity {
     public void startTimer(View v) {
         startTime = System.currentTimeMillis();
         tHandler.removeCallbacks(timer);
-        tHandler.post(timer);
+        tHandler.postDelayed(timer,0);
     }
 
     public void stopTimer(View v) {
