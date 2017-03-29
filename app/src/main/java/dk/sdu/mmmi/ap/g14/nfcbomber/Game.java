@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class Game extends AppCompatActivity {
 
-    private final int REFRESH_RATE = 100;
+    private final int REFRESH_RATE = 10;
 
     private TextView timerText;
     private Handler tHandler;
@@ -29,7 +29,7 @@ public class Game extends AppCompatActivity {
 
         /* Convert seconds to string */
         secs = secs % 60;
-        String seconds = String.valueOf(secs);
+        String seconds = Integer.toString(Math.round(secs));
         if(secs == 0){
             seconds = "00";
         }
@@ -39,7 +39,7 @@ public class Game extends AppCompatActivity {
 
         /* Convert minutes to string */
         mins = mins % 60;
-        String minutes = String.valueOf(mins);
+        String minutes = Integer.toString(Math.round(mins));
         if(mins == 0){
             minutes = "00";
         }
@@ -49,13 +49,16 @@ public class Game extends AppCompatActivity {
 
         /* Convert milliseconds */
         String milliseconds = String.valueOf((long)time);
-        if(milliseconds.length()==2){
+        if(milliseconds.length() ==2){
             milliseconds = "0"+milliseconds;
         }
         if(milliseconds.length()<=1){
             milliseconds = "00";
         }
-        milliseconds = milliseconds.substring(milliseconds.length()-3, milliseconds.length()-2);
+        milliseconds = milliseconds.substring(milliseconds.length()-3, milliseconds.length()-1);
+        if (milliseconds.length() == 1) {
+            milliseconds = milliseconds;
+        }
         timerText.setText(minutes+":"+seconds+":"+milliseconds);
     }
 
@@ -71,7 +74,7 @@ public class Game extends AppCompatActivity {
     public void startTimer(View v) {
         startTime = System.currentTimeMillis();
         tHandler.removeCallbacks(timer);
-        tHandler.postDelayed(timer,0);
+        tHandler.postDelayed(timer,10);
     }
 
     public void stopTimer(View v) {
