@@ -39,7 +39,8 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onClient(Intent intent) {
+    public void onGame(View v) {
+        Intent intent = new Intent(this, Game.class);
         startActivity(intent);
     }
 
