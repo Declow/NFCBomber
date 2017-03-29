@@ -1,9 +1,8 @@
 package dk.sdu.mmmi.ap.g14.nfcbomber;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.os.Bundle;
 import android.widget.TextView;
 
 public class Game extends AppCompatActivity {
@@ -18,9 +17,9 @@ public class Game extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
-        timerText = (TextView) findViewById(R.id.bomb_time);
-        tHandler = new Handler();
+        setContentView(R.layout.activity_basic_test);
+/*        timerText = (TextView) findViewById(R.id.bomb_time);
+        tHandler = new Handler();*/
     }
 
     private void updateTimer(float time) {
@@ -59,7 +58,7 @@ public class Game extends AppCompatActivity {
         timerText.setText(minutes+":"+seconds+":"+milliseconds);
     }
 
-    private Runnable timer = new Runnable() {
+/*    private Runnable timer = new Runnable() {
         @Override
         public void run() {
             elapsedTime = System.currentTimeMillis() - startTime;
@@ -77,5 +76,5 @@ public class Game extends AppCompatActivity {
     public void stopTimer(View v) {
         tHandler.removeCallbacks(timer);
         updateTimer(System.currentTimeMillis() - startTime);
-    }
+    }*/
 }
