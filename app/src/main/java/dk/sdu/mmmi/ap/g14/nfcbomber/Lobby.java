@@ -120,22 +120,21 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
     @Override
     public NdefMessage createNdefMessage(NfcEvent e) {
 
-//        ByteArrayOutputStream out = new ByteArrayOutputStream();
-//        byte[] msg = new byte[1];
-//        try {
-//            ObjectOutputStream os = new ObjectOutputStream(out);
-//            os.writeObject(getInetAddress());
-//            msg = out.toByteArray();
-//            os.close();
-//            out.close();
-//        } catch (IOException e1) {
-//            e1.printStackTrace();
-//        }
-        String text = "Hello world, and NFC. Beam time: "+System.currentTimeMillis();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] msg = new byte[1];
+        try {
+            ObjectOutputStream os = new ObjectOutputStream(out);
+            os.writeObject(getInetAddress());
+            msg = out.toByteArray();
+            os.close();
+            out.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
 
         return new NdefMessage(
                 new NdefRecord[] { NdefRecord.createMime(
-                        "application/dk.sdu.mmmi.ap.g14.nfcbomber", text.getBytes())
+                        "application/dk.sdu.mmmi.ap.g14.nfcbomber", msg)
                 });
     }
 
@@ -150,34 +149,23 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
 
 
     void processIntent(Intent intent) {
-//        Intent myIntent = new Intent(this, Lobby.class);
-//        myIntent.putExtra(GAME_SETUP, GAME_CLIENT);
-//        //myIntent.putExtra();
-
-//        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
-//                NfcAdapter.EXTRA_NDEF_MESSAGES);
-//        // only one message sent during the beam
-//        NdefMessage msg = (NdefMessage) rawMsgs[0];
-//        InetAddress inet = null;
-//        // record 0 contains the MIME type, record 1 is the AAR, if present
-//        byte[] bytes = msg.getRecords()[0].getPayload();
-//        try {
-//            ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
-//            ObjectInput in = null;
-//            in = new ObjectInputStream(bin);
-//            Object o = in.readObject();
-//            inet = (InetAddress) o;
-//            Log.wtf(TAG, inet.getHostAddress());
-//        } catch (Exception e) {
-//            Log.wtf(TAG, "reading InetAddress failed :(");
-//        }
-
-//        onClient(myIntent);
-
-        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-        NdefMessage msg = (NdefMessage)rawMsgs[0];
-        String text = new String(msg.getRecords()[0].getPayload());
-        Log.wtf(TAG, text);
+        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
+                NfcAdapter.EXTRA_NDEF_MESSAGES);
+        // only one message sent during the beam
+        NdefMessage msg = (NdefMessage) rawMsgs[0];
+        InetAddress inet = null;
+        // record 0 contains the MIME type, record 1 is the AAR, if present
+        byte[] bytes = msg.getRecords()[0].getPayload();
+        try {
+            ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
+            ObjectInput in = null;
+            in = new ObjectInputStream(bin);
+            Object o = in.readObject();
+            inet = (InetAddress) o;
+            Log.wtf(TAG, inet.getHostAddress());
+        } catch (Exception e) {
+            Log.wtf(TAG, "reading InetAddress failed :(");
+        }
     }
 
 }
