@@ -84,12 +84,18 @@ public class LobbyClient extends AppCompatActivity implements CallBacks {
         receiver = new WifiReceiver(this);
     }
 
-    private void connectToHost(InetAddress inet) {
-        Socket socket  = null;
-        try {
-            socket = new Socket(inet, 15099);
-        } catch (IOException e) {
-            Log.wtf(TAG, "Unable to create socket to host :(");
-        }
+    private void connectToHost(final InetAddress inet) {
+        Thread clientThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Socket socket  = null;
+                try {
+                    socket = new Socket(inet, 15099);
+                } catch (IOException e) {
+                    Log.wtf(TAG, "Unable to create socket to host :(");
+                }
+            }
+        });
+        clientThread.start();
     }
 }

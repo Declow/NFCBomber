@@ -144,13 +144,20 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
     }
 
     private void createServerSocket() {
-        ServerSocket serverSocket  = null;
 
-        try {
-            serverSocket = new ServerSocket(15099);
-        } catch (IOException e) {
-            Log.wtf(TAG, "Unable To create server socket :(");
-        }
+        Thread serverThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ServerSocket serverSocket  = null;
+
+                try {
+                    serverSocket = new ServerSocket(15099);
+                } catch (IOException e) {
+                    Log.wtf(TAG, "Unable To create server socket :(");
+                }
+            }
+        });
+        serverThread.start();
     }
 
 }
