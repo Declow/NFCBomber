@@ -3,9 +3,6 @@ package dk.sdu.mmmi.ap.g14.nfcbomber;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.util.Log;
 
 /**
  * Created by declow on 3/22/17.
@@ -14,8 +11,8 @@ import android.util.Log;
 public class WifiReceiver extends BroadcastReceiver {
 
 
-    private callBacks callBack;
-    public WifiReceiver(callBacks callback) {
+    private CallBacks callBack;
+    public WifiReceiver(CallBacks callback) {
         this.callBack = callback;
     }
 

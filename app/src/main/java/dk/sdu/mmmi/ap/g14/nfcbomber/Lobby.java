@@ -24,7 +24,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
-public class Lobby extends AppCompatActivity implements callBacks, NfcAdapter.CreateNdefMessageCallback {
+public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.CreateNdefMessageCallback {
 
     private static final String TAG = "Lobby";
     WifiReceiver receiver;
