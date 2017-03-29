@@ -29,7 +29,7 @@
                 <data android:mimeType="application/dk.sdu.mmmi.ap.g14.nfcbomber" />
             </intent-filter>
         </activity>
-        <activity android:name=".basicTest"></activity>
+        <activity android:name=".Game"></activity>
     </application>
 
 </manifest>
