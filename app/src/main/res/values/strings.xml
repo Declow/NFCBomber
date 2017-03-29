@@ -2,10 +2,14 @@
     <string name="app_name">NFCBomber</string>
     <string name="app_type_client">Client</string>
     <string name="app_type_host">Host</string>
+    <string name="HostGameHeader">Host a new game</string>
     <string name="HostGame">Host game for NFCBomber</string>
     <string name="HostGameButton">Host</string>
-    <string name="joinExistingGame">Join existing game</string>
-    <string name="JoinExistingGameButton">Join</string>
+    <string name="JoinGameHeader">Join an existing game</string>
+    <string name="joinExistingGame">To join an existing game, make sure your NFC is turned
+        on and then move your device back to back with the host device while the host device is in
+        the lobby.
+    </string>
     <string name="host_intro">You are the host of the game. To connect with clients, simply put your
         device close to your friends\' devices. The devices will then exchange data and your friends
         should appear below.

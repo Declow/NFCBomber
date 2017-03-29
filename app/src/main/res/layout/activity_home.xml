@@ -9,6 +9,12 @@
     tools:context="dk.sdu.mmmi.ap.g14.nfcbomber.Home">
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="@string/HostGameHeader" />
+
+    <TextView
         android:id="@+id/hostText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,15 +28,15 @@
         android:onClick="onHost" />
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:text="@string/JoinGameHeader" />
+
+    <TextView
         android:id="@+id/joinText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/joinExistingGame"/>
-
-    <Button
-        android:id="@+id/joinButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/JoinExistingGameButton"
-        android:onClick="onClient"/>
 </LinearLayout>
