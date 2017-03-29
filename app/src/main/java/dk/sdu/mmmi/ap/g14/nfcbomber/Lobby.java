@@ -8,6 +8,7 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,8 +16,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -55,6 +59,7 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
             Log.wtf(TAG, "NFC available");
         }
 
+        mNfcAdapter.setNdefPushMessageCallback(this, this);
 
         String gameType = intent.getStringExtra(Home.GAME_SETUP);
         if (gameType.equals(Home.GAME_HOST))
@@ -118,7 +123,6 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
         try {
             ObjectOutputStream os = new ObjectOutputStream(out);
             os.writeObject(getInetAddress());
-            msg = new byte[out.toByteArray().length];
             msg = out.toByteArray();
             os.close();
             out.close();
@@ -131,4 +135,38 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
                         "application/dk.sdu.mmmi.ap.g14.nfcbomber", msg)
                 });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Check to see that the Activity started due to an Android Beam
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+            processIntent(getIntent());
+        }
+    }
+
+
+    void processIntent(Intent intent) {
+        TextView textView = (TextView) findViewById(R.id.text_connectedDevices);
+        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
+                NfcAdapter.EXTRA_NDEF_MESSAGES);
+        // only one message sent during the beam
+        NdefMessage msg = (NdefMessage) rawMsgs[0];
+        InetAddress inet = null;
+        // record 0 contains the MIME type, record 1 is the AAR, if present
+        byte[] bytes = msg.getRecords()[0].getPayload();
+        try {
+            ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
+            ObjectInput in = null;
+            in = new ObjectInputStream(bin);
+            Object o = in.readObject();
+            inet = (InetAddress) o;
+            Log.wtf(TAG, inet.getHostAddress());
+        } catch (Exception e) {
+
+        }
+
+        textView.setText(inet.getHostAddress());
+    }
+
 }
