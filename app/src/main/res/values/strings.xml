@@ -14,7 +14,8 @@
         device close to your friends\' devices. The devices will then exchange data and your friends
         should appear below.
     </string>
-    <string name="loading">Waiting for WiFi</string>
+    <string name="loading">Loading</string>
+    <string name="wait_wifi">Waiting for Wifi</string>
     <string name="connected_devices">Connected devices:</string>
     <string name="your_ip">Your IP address is:</string>
     <string name="current_bomb_time">Current bomb time</string>
