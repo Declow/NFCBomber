@@ -73,6 +73,12 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(receiver);
+    }
+
     //Check the state of wifi
     //return 0 equals to wifi not connected
     private int checkWifi() {
