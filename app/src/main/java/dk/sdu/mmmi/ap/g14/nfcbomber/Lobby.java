@@ -68,6 +68,8 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
 
         Log.wtf(TAG, gameType);
 
+        createServerSocket();
+
     }
 
     @Override
@@ -145,7 +147,7 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
         ServerSocket serverSocket  = null;
 
         try {
-            serverSocket = new ServerSocket(R.integer.port);
+            serverSocket = new ServerSocket(15099);
         } catch (IOException e) {
             Log.wtf(TAG, "Unable To create server socket :(");
         }
