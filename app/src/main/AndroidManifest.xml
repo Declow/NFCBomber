@@ -30,13 +30,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Lobby">
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="application/dk.sdu.mmmi.ap.g14.nfcbomber" />
-            </intent-filter>
         </activity>
         <activity android:name=".Game"></activity>
     </application>
