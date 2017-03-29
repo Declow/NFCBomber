@@ -133,7 +133,7 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
 
         return new NdefMessage(
                 new NdefRecord[] { NdefRecord.createMime(
-                        "application/dk.sdu.mmmi.ap.g14.nfcbomber", text.getBytes()),
+                        "application/dk.sdu.mmmi.ap.g14.hello", text.getBytes()),
                         NdefRecord.createApplicationRecord("dk.sdu.mmmi.ap.g14.nfcbomber")
                 });
     }
