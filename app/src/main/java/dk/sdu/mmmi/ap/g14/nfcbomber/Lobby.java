@@ -44,12 +44,15 @@ public class Lobby extends AppCompatActivity implements callBacks, NfcAdapter.Cr
 
         this.registerReceiver(receiver, inf);
 
+
         //NFC checker
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (mNfcAdapter == null) {
             Toast.makeText(this, "NFC is not available", Toast.LENGTH_SHORT).show();
             finish();
             return;
+        } else {
+            Log.wtf(TAG, "NFC available");
         }
 
 
