@@ -17,17 +17,14 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.SocketException;
 import java.util.Enumeration;
 
-public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.CreateNdefMessageCallback {
+public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.CreateNdefMessageCallback {
 
     private static final String TAG = "Lobby";
     WifiReceiver receiver;
@@ -112,7 +109,7 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
     }
 
     @Override
-    public void connectionChanged() {
+    public void callBack() {
         TextView text = (TextView) findViewById(R.id.ip_address);
         Button b = (Button) findViewById(R.id.start_host);
         if (checkWifi() != 0) {
@@ -147,26 +144,7 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
 
     private void createServerSocket() {
 
-        Thread serverThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ServerSocket serverSocket  = null;
 
-                try {
-                    serverSocket = new ServerSocket(15099);
-
-                    while (true) {
-                        Socket clientSocket = serverSocket.accept();
-                        handleClient(clientSocket);
-                    }
-
-
-                } catch (IOException e) {
-                    Log.wtf(TAG, "Unable To create server socket :(");
-                }
-            }
-        });
-        serverThread.start();
     }
 
 

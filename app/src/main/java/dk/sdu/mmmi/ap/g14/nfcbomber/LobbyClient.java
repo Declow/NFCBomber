@@ -19,7 +19,7 @@ import java.net.Socket;
  * Created by declow on 3/29/17.
  */
 
-public class LobbyClient extends AppCompatActivity implements CallBacks {
+public class LobbyClient extends AppCompatActivity implements CallBack {
 
     private static final String TAG = "GAME_LOBBY_CLIENT";
     WifiReceiver receiver;

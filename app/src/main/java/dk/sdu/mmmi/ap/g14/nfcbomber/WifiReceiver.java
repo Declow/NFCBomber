@@ -11,8 +11,8 @@ import android.content.Intent;
 public class WifiReceiver extends BroadcastReceiver {
 
 
-    private CallBacks callBack;
-    public WifiReceiver(CallBacks callback) {
+    private CallBack callBack;
+    public WifiReceiver(CallBack callback) {
         this.callBack = callback;
     }
 
