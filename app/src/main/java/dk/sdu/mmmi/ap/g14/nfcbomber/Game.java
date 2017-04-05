@@ -18,7 +18,7 @@ public class Game extends AppCompatActivity implements SensorEventListener {
     public static final String BOMB_TIME_EXTRA = "bomb_time";
 
     private SensorManager sensorManager;
-    private double ax, ay, az, sum, oldsum;
+    private double ax, ay, az;
     private TextView timerText;
     private Handler tHandler;
     private long startTime;
@@ -97,10 +97,10 @@ public class Game extends AppCompatActivity implements SensorEventListener {
             ax = event.values[0];
             ay = event.values[1];
             az = event.values[2];
-            sum = ax + ay + az;
+            double max = Math.max(Math.max(ax, ay), az);
 
             // int diff = (int) Math.abs(sum - oldsum);
-            if(sum > DEFUSE_THRESHOLD) {
+            if(max > DEFUSE_THRESHOLD) {
                 stopTimer();
             }
         }
