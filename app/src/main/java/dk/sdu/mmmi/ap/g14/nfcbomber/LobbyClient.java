@@ -91,6 +91,8 @@ public class LobbyClient extends AppCompatActivity implements CallBacks {
                 Socket socket  = null;
                 try {
                     socket = new Socket(inet, 15099);
+
+
                 } catch (IOException e) {
                     Log.wtf(TAG, "Unable to create socket to host :(");
                 }

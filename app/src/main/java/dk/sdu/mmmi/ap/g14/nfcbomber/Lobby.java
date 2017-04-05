@@ -17,11 +17,13 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.SocketException;
 import java.util.Enumeration;
 
@@ -152,6 +154,13 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
 
                 try {
                     serverSocket = new ServerSocket(15099);
+
+                    while (true) {
+                        Socket clientSocket = serverSocket.accept();
+                        handleClient(clientSocket);
+                    }
+
+
                 } catch (IOException e) {
                     Log.wtf(TAG, "Unable To create server socket :(");
                 }
@@ -159,5 +168,6 @@ public class Lobby extends AppCompatActivity implements CallBacks, NfcAdapter.Cr
         });
         serverThread.start();
     }
+
 
 }
