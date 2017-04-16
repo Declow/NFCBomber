@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import dk.sdu.mmmi.ap.g14.nfcbomber.CallBackWithArg;
+import dk.sdu.mmmi.ap.g14.nfcbomber.network.Com;
 
 /**
  * Created by declow on 4/5/17.
@@ -32,7 +33,7 @@ public class Client implements CallBackWithArg {
                     while (true) {
                         try {
                             Object message = messages.take();
-                            Log.wtf(TAG, (String) message);
+                            determinState(message);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -58,6 +59,18 @@ public class Client implements CallBackWithArg {
             messages.put(obj);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void determinState(Object obj) {
+        Com com = (Com) obj;
+        switch (com) {
+            case START_GAME:
+                Log.wtf(TAG, "Start game plz");
+                break;
+            case GAME_END:
+                Log.wtf(TAG, "Stop game plz");
+                break;
         }
     }
 }

@@ -8,11 +8,10 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
-import android.os.Looper;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +25,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
+import dk.sdu.mmmi.ap.g14.nfcbomber.network.Com;
 import dk.sdu.mmmi.ap.g14.nfcbomber.server.Server;
 
 public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.CreateNdefMessageCallback {
@@ -164,6 +164,10 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
         };
         t.setDaemon(true);
         t.start();
+    }
+
+    public void startGame(View v) {
+        server.sendToEveryConnectedDevice(Com.START_GAME);
     }
 
     private void toast(final Server server) {

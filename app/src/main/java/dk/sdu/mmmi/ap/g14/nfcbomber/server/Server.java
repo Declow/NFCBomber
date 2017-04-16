@@ -66,6 +66,40 @@ public class Server {
         handleMessages.setDaemon(true);
         handleMessages.start();
 
+        //testMethod();
+    }
+
+    public void sendToEveryConnectedDevice(final Object obj) {
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                synchronized (clientList) {
+                    for (ConnectionToClient client : clientList) {
+                        client.write(obj);
+                    }
+                    clientList.notify();
+                }
+            }
+        };
+        t.start();
+    }
+
+    public int clientSize() {
+        synchronized (clientList) {
+            return clientList.size();
+        }
+    }
+
+    synchronized private Object take() {
+        try {
+            return messages.take();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void testMethod() {
         Thread sendToClients = new Thread() {
             public void run() {
                 while (true) {
@@ -83,32 +117,6 @@ public class Server {
 
         sendToClients.setDaemon(true);
         sendToClients.start();
-
-    }
-
-    public void sendToEveryConnectedDevice(Object obj) {
-        synchronized (clientList) {
-            for (ConnectionToClient client : clientList) {
-                Log.wtf(TAG, " client size: " + Integer.toString(clientList.size()) );
-                client.write(obj);
-            }
-            clientList.notify();
-        }
-    }
-
-    public int clientSize() {
-        synchronized (clientList) {
-            return clientList.size();
-        }
-    }
-
-    synchronized private Object take() {
-        try {
-            return messages.take();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 }
