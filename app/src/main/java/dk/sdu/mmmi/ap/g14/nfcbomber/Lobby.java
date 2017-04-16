@@ -8,6 +8,8 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,11 +26,14 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
+import dk.sdu.mmmi.ap.g14.nfcbomber.server.Server;
+
 public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.CreateNdefMessageCallback {
 
     private static final String TAG = "Lobby";
     WifiReceiver receiver;
     NfcAdapter mNfcAdapter;
+    Server server;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +72,7 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
 
         Log.wtf(TAG, gameType);
 
-        createServerSocket();
+        createServer();
 
     }
 
@@ -142,9 +147,32 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
                 });
     }
 
-    private void createServerSocket() {
+    private void createServer() {
 
+        server = new Server(getApplicationContext().getResources().getInteger(R.integer.port));
+        Thread t = new Thread() {
+            public void run() {
+                while(true) {
+                    try {
+                        sleep(Toast.LENGTH_LONG);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    //toast(server);
+                }
+            }
+        };
+        t.setDaemon(true);
+        t.start();
+    }
 
+    private void toast(final Server server) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), "client count: " + server.clientSize(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

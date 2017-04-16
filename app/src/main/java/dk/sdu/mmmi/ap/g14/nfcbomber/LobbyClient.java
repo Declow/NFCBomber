@@ -15,6 +15,8 @@ import java.io.ObjectInputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import dk.sdu.mmmi.ap.g14.nfcbomber.client.Client;
+
 /**
  * Created by declow on 3/29/17.
  */
@@ -34,6 +36,7 @@ public class LobbyClient extends AppCompatActivity implements CallBack {
 
 
 
+
     }
 
     @Override
@@ -49,11 +52,6 @@ public class LobbyClient extends AppCompatActivity implements CallBack {
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
             processIntent(getIntent());
         }
-    }
-
-    @Override
-    public void connectionChanged() {
-
     }
 
     private void processIntent(Intent intent) {
@@ -88,16 +86,16 @@ public class LobbyClient extends AppCompatActivity implements CallBack {
         Thread clientThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Socket socket  = null;
-                try {
-                    socket = new Socket(inet, 15099);
-
-
-                } catch (IOException e) {
-                    Log.wtf(TAG, "Unable to create socket to host :(");
-                }
+                Client c = new Client(inet, getApplicationContext().getResources().getInteger(R.integer.port));
             }
         });
+
+        clientThread.setDaemon(true);
         clientThread.start();
+    }
+
+    @Override
+    public void callBack() {
+
     }
 }
