@@ -8,6 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import dk.sdu.mmmi.ap.g14.nfcbomber.CallBackWithArg;
 import dk.sdu.mmmi.ap.g14.nfcbomber.network.Com;
+import dk.sdu.mmmi.ap.g14.nfcbomber.network.NetObject;
 
 /**
  * Created by declow on 4/5/17.
@@ -63,10 +64,11 @@ public class Client implements CallBackWithArg {
     }
 
     private void determinState(Object obj) {
-        Com com = (Com) obj;
-        switch (com) {
+
+        NetObject com = (NetObject) obj;
+        switch (com.getType()) {
             case START_GAME:
-                Log.wtf(TAG, "Start game plz");
+                Log.wtf(TAG, "Start game plz " + (int) com.getContent());
                 break;
             case GAME_END:
                 Log.wtf(TAG, "Stop game plz");

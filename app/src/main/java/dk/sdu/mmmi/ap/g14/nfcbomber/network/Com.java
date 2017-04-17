@@ -5,5 +5,5 @@ package dk.sdu.mmmi.ap.g14.nfcbomber.network;
  */
 
 public enum Com {
-    START_GAME, GAME_END,;
+    START_GAME, GAME_END
 }

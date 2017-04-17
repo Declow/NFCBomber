@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.ap.g14.nfcbomber.server;
 
+import android.telecom.Call;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -9,6 +10,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import dk.sdu.mmmi.ap.g14.nfcbomber.CallBack;
 import dk.sdu.mmmi.ap.g14.nfcbomber.server.ConnectionToClient;
 
 /**
@@ -19,14 +21,16 @@ public class Server {
     private static final String TAG = "SERVER";
 
     private final ArrayList<ConnectionToClient> clientList = new ArrayList<>();
-    private final ArrayList<Socket> clientList2 = new ArrayList<>();
 
     private ServerSocket serverSocket;
     private LinkedBlockingQueue<Object> messages;
 
-    public Server(final int port) {
-        messages = new LinkedBlockingQueue<>();
+    private CallBack callBack;
 
+    public Server(final int port, final CallBack callBack) {
+        this.messages = new LinkedBlockingQueue<>();
+        this.callBack = callBack;
+        final Server s = this;
         Thread serverThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -35,10 +39,11 @@ public class Server {
 
                     while (true) {
                         Socket clientSocket = serverSocket.accept();
-                        clientList2.add(clientSocket);
-                        ConnectionToClient client = new ConnectionToClient(clientSocket, messages);
+
+                        ConnectionToClient client = new ConnectionToClient(clientSocket, messages, s);
                         clientList.add(client);
                         client.start();
+                        callBack.updateUI(clientSize());
                     }
 
 
@@ -97,6 +102,14 @@ public class Server {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void removeClient(ConnectionToClient client) {
+        synchronized (clientList) {
+            clientList.remove(client);
+            callBack.updateUI(clientSize());
+        }
+
     }
 
     private void testMethod() {

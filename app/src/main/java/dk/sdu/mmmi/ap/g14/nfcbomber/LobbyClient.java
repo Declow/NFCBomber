@@ -98,4 +98,9 @@ public class LobbyClient extends AppCompatActivity implements CallBack {
     public void callBack() {
 
     }
+
+    @Override
+    public void updateUI(int i) {
+
+    }
 }

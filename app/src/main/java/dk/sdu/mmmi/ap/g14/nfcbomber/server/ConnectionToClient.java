@@ -15,14 +15,16 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ConnectionToClient {
 
     private static final String TAG = "ConnectionToClient";
-    ObjectInputStream in;
-    ObjectOutputStream out;
-    Socket socket;
+    private ObjectInputStream in;
+    private ObjectOutputStream out;
+    private Socket socket;
     private LinkedBlockingQueue<Object> messages;
+    private Server server;
 
-    ConnectionToClient(Socket socket, final LinkedBlockingQueue<Object> messages) throws IOException {
+    ConnectionToClient(Socket socket, final LinkedBlockingQueue<Object> messages, final Server server) throws IOException {
         this.socket = socket;
         this.messages = messages;
+        this.server = server;
 
         Log.wtf(TAG, "Object created");
     }
@@ -38,12 +40,10 @@ public class ConnectionToClient {
                         Object obj = in.readObject();
                         Log.wtf(TAG, "Got message");
                         messages.put(obj);
-                    } catch (IOException e) {
-                        Log.wtf(TAG,e.getMessage());
-                    } catch (ClassNotFoundException e) {
+                    } catch (Exception e) {
                         Log.wtf(TAG, e.getMessage());
-                    } catch (InterruptedException e) {
-                        Log.wtf(TAG, e.getMessage());
+                        remove();
+                        break;
                     }
                 }
             }
@@ -51,6 +51,10 @@ public class ConnectionToClient {
 
         read.setDaemon(true);
         read.start();
+    }
+
+    private void remove() {
+        server.removeClient(this);
     }
 
     public void write(Object obj) {

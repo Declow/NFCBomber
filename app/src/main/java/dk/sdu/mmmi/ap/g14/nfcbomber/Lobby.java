@@ -2,6 +2,7 @@ package dk.sdu.mmmi.ap.g14.nfcbomber;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.nfc.NdefMessage;
@@ -24,8 +25,10 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+import java.util.Random;
 
 import dk.sdu.mmmi.ap.g14.nfcbomber.network.Com;
+import dk.sdu.mmmi.ap.g14.nfcbomber.network.NetObject;
 import dk.sdu.mmmi.ap.g14.nfcbomber.server.Server;
 
 public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.CreateNdefMessageCallback {
@@ -127,6 +130,19 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
     }
 
     @Override
+    public void updateUI(final int i) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.wtf(TAG, "updateUI");
+                TextView text = (TextView) findViewById(R.id.connectedDevices);
+
+                    text.setText(Integer.toString(i));
+            }
+        });
+    }
+
+    @Override
     public NdefMessage createNdefMessage(NfcEvent e) {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -149,7 +165,7 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
 
     private void createServer() {
 
-        server = new Server(getApplicationContext().getResources().getInteger(R.integer.port));
+        server = new Server(getApplicationContext().getResources().getInteger(R.integer.port), this);
         Thread t = new Thread() {
             public void run() {
                 while(true) {
@@ -167,7 +183,7 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
     }
 
     public void startGame(View v) {
-        server.sendToEveryConnectedDevice(Com.START_GAME);
+        server.sendToEveryConnectedDevice(new NetObject(new Random().nextInt(10) + 5, Com.START_GAME));
     }
 
     private void toast(final Server server) {

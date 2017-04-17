@@ -6,4 +6,5 @@ package dk.sdu.mmmi.ap.g14.nfcbomber;
 
 public interface CallBack {
     void callBack();
+    void updateUI(int i);
 }
