@@ -39,12 +39,6 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onGame(View v) {
-        Intent intent = new Intent(this, Game.class);
-        intent.putExtra(Game.BOMB_TIME_EXTRA, 5);
-        startActivity(intent);
-    }
-
     private void nfc() {
         //NFC checker
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
