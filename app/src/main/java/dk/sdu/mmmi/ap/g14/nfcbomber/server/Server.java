@@ -23,12 +23,10 @@ public class Server {
     private final ArrayList<ConnectionToClient> clientList = new ArrayList<>();
 
     private ServerSocket serverSocket;
-    private LinkedBlockingQueue<Object> messages;
 
     private CallBack callBack;
 
     public Server(final int port, final CallBack callBack) {
-        this.messages = new LinkedBlockingQueue<>();
         this.callBack = callBack;
         final Server s = this;
         Thread serverThread = new Thread(new Runnable() {
@@ -40,7 +38,7 @@ public class Server {
                     while (true) {
                         Socket clientSocket = serverSocket.accept();
 
-                        ConnectionToClient client = new ConnectionToClient(clientSocket, messages, s);
+                        ConnectionToClient client = new ConnectionToClient(clientSocket, s);
                         clientList.add(client);
                         client.start();
                         callBack.updateUI(clientSize());
@@ -56,22 +54,6 @@ public class Server {
         serverThread.setDaemon(true);
         serverThread.start();
 
-        Thread handleMessages = new Thread() {
-            public void run() {
-                while (true) {
-                    Object message = take();
-                    if (message != null) {
-                        Log.wtf(TAG, "Got message from Client");
-                        Log.wtf(TAG, (String) message);
-                    }
-                }
-            }
-        };
-
-        handleMessages.setDaemon(true);
-        handleMessages.start();
-
-        //testMethod();
     }
 
     public void sendToEveryConnectedDevice(final Object obj) {
@@ -93,15 +75,6 @@ public class Server {
         synchronized (clientList) {
             return clientList.size();
         }
-    }
-
-    synchronized private Object take() {
-        try {
-            return messages.take();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public void removeClient(ConnectionToClient client) {

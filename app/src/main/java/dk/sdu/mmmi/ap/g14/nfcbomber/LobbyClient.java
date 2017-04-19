@@ -34,7 +34,7 @@ public class LobbyClient extends AppCompatActivity {
         setContentView(R.layout.activity_lobby_client);
 
     }
-    
+
     @Override
     public void onResume() {
         super.onResume();

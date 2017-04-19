@@ -65,16 +65,6 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
 
         mNfcAdapter.setNdefPushMessageCallback(this, this);
 
-        String gameType = intent.getStringExtra(Home.GAME_SETUP);
-        if(gameType != null) {
-            if (gameType.equals(Home.GAME_HOST))
-                setTitle(getResources().getString(R.string.app_name) + getResources().getString(R.string.app_type_host));
-            else
-                setTitle(getResources().getString(R.string.app_name) + getResources().getString(R.string.app_type_client));
-        }
-
-        Log.wtf(TAG, gameType);
-
         createServer();
 
     }
@@ -164,21 +154,7 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
     }
 
     private void createServer() {
-
         server = new Server(getApplicationContext().getResources().getInteger(R.integer.port), this);
-        Thread t = new Thread() {
-            public void run() {
-                while(true) {
-                    try {
-                        sleep(Toast.LENGTH_LONG);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
-        t.setDaemon(true);
-        t.start();
     }
 
     public void startGame(View v) {

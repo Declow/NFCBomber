@@ -21,7 +21,7 @@ public class ConnectionToClient {
     private LinkedBlockingQueue<Object> messages;
     private Server server;
 
-    ConnectionToClient(Socket socket, final LinkedBlockingQueue<Object> messages, final Server server) throws IOException {
+    ConnectionToClient(Socket socket, final Server server) throws IOException {
         this.socket = socket;
         this.messages = messages;
         this.server = server;
