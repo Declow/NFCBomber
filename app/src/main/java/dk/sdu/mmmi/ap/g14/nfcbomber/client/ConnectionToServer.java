@@ -39,7 +39,7 @@ public class ConnectionToServer {
                         }
                         Object obj = in.readObject();
                         Log.wtf(TAG, "Got a message");
-                        callBack.CallBack(obj);
+                        callBack.message(obj);
                     } catch (IOException e) {
                         Log.wtf(TAG, "IOException is: " + e.getMessage());
                     } catch (ClassNotFoundException e) {

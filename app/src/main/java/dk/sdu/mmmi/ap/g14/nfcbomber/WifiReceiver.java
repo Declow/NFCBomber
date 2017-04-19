@@ -18,6 +18,6 @@ public class WifiReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        callBack.callBack();
+        callBack.wifiChanged();
     }
 }

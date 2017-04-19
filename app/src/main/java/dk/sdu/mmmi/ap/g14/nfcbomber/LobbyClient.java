@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -33,10 +35,6 @@ public class LobbyClient extends AppCompatActivity implements CallBack {
         setContentView(R.layout.activity_lobby_client);
 
         wifiReciver();
-
-
-
-
     }
 
     @Override
@@ -74,7 +72,7 @@ public class LobbyClient extends AppCompatActivity implements CallBack {
         }
 
         if (inet != null) {
-            connectToHost(inet);
+            connectToHost(inet, this);
         }
     }
 
@@ -82,11 +80,11 @@ public class LobbyClient extends AppCompatActivity implements CallBack {
         receiver = new WifiReceiver(this);
     }
 
-    private void connectToHost(final InetAddress inet) {
+    private void connectToHost(final InetAddress inet, final LobbyClient lobby) {
         Thread clientThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Client c = new Client(inet, getApplicationContext().getResources().getInteger(R.integer.port));
+                Client c = new Client(inet, getApplicationContext().getResources().getInteger(R.integer.port), lobby);
             }
         });
 
@@ -94,8 +92,22 @@ public class LobbyClient extends AppCompatActivity implements CallBack {
         clientThread.start();
     }
 
+    public void startGame(final int timer) {
+
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getApplicationContext(), Game.class);
+                intent.putExtra(Game.BOMB_TIME_EXTRA, timer);
+                startActivity(intent);
+            }
+        });
+    }
+
     @Override
-    public void callBack() {
+    public void wifiChanged() {
 
     }
 

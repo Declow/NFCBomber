@@ -117,7 +117,7 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
     }
 
     @Override
-    public void callBack() {
+    public void wifiChanged() {
         TextView text = (TextView) findViewById(R.id.ip_address);
         Button b = (Button) findViewById(R.id.start_host);
         if (checkWifi() != 0) {
@@ -174,7 +174,6 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    //toast(server);
                 }
             }
         };
@@ -184,15 +183,6 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
 
     public void startGame(View v) {
         server.sendToEveryConnectedDevice(new NetObject(new Random().nextInt(10) + 5, Com.START_GAME));
-    }
-
-    private void toast(final Server server) {
-        this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), "client count: " + server.clientSize(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 

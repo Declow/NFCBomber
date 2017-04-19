@@ -112,24 +112,4 @@ public class Server {
 
     }
 
-    private void testMethod() {
-        Thread sendToClients = new Thread() {
-            public void run() {
-                while (true) {
-                    try {
-                        Thread.sleep(3000);
-                        String message = "/0 Send Message";
-                        Log.wtf(TAG, "Client size: " + clientSize());
-                        sendToEveryConnectedDevice(message);
-                    } catch (InterruptedException e) {
-                        Log.wtf(TAG, e.getMessage());
-                    }
-                }
-            }
-        };
-
-        sendToClients.setDaemon(true);
-        sendToClients.start();
-    }
-
 }

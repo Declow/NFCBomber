@@ -16,6 +16,7 @@ public class Game extends AppCompatActivity implements SensorEventListener {
     private final int REFRESH_RATE = 10;
     private final int DEFUSE_THRESHOLD = 20;
     public static final String BOMB_TIME_EXTRA = "bomb_time";
+    private static final String TAG = "GAME";
 
     private SensorManager sensorManager;
     private double ax, ay, az;
@@ -30,7 +31,7 @@ public class Game extends AppCompatActivity implements SensorEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        bombTime = getIntent().getIntExtra(BOMB_TIME_EXTRA, 10);
+        bombTime = getIntent().getIntExtra(Game.BOMB_TIME_EXTRA, 10);
 
         timerText = (TextView) findViewById(R.id.bomb_time);
         tHandler = new Handler();
@@ -39,6 +40,8 @@ public class Game extends AppCompatActivity implements SensorEventListener {
         sensorManager.registerListener(this,
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 sensorManager.SENSOR_DELAY_NORMAL);
+        
+        Log.wtf(TAG, "Timer val: " + bombTime);
     }
 
     private void updateTimer(float time) {
