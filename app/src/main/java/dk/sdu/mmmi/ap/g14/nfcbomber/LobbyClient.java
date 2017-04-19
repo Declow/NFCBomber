@@ -49,6 +49,7 @@ public class LobbyClient extends AppCompatActivity implements CallBack {
         // Check to see that the Activity started due to an Android Beam
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
             processIntent(getIntent());
+            getIntent().setAction("");
         }
     }
 

@@ -40,8 +40,13 @@ public class Game extends AppCompatActivity implements SensorEventListener {
         sensorManager.registerListener(this,
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 sensorManager.SENSOR_DELAY_NORMAL);
-        
         Log.wtf(TAG, "Timer val: " + bombTime);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startTimer();
     }
 
     private void updateTimer(float time) {
@@ -125,13 +130,5 @@ public class Game extends AppCompatActivity implements SensorEventListener {
 
     private void bombExplode() {
         timerText.setText("DEAD");
-    }
-
-    public void onStartTimer(View v) {
-        startTimer();
-    }
-
-    public void onStopTimer(View v) {
-        stopTimer();
     }
 }
