@@ -23,10 +23,9 @@ import dk.sdu.mmmi.ap.g14.nfcbomber.client.Client;
  * Created by declow on 3/29/17.
  */
 
-public class LobbyClient extends AppCompatActivity implements CallBack {
+public class LobbyClient extends AppCompatActivity {
 
     private static final String TAG = "GAME_LOBBY_CLIENT";
-    WifiReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +33,8 @@ public class LobbyClient extends AppCompatActivity implements CallBack {
 
         setContentView(R.layout.activity_lobby_client);
 
-        wifiReciver();
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        this.unregisterReceiver(receiver);
-    }
-
+    
     @Override
     public void onResume() {
         super.onResume();
@@ -77,10 +69,6 @@ public class LobbyClient extends AppCompatActivity implements CallBack {
         }
     }
 
-    private void wifiReciver() {
-        receiver = new WifiReceiver(this);
-    }
-
     private void connectToHost(final InetAddress inet, final LobbyClient lobby) {
         Thread clientThread = new Thread(new Runnable() {
             @Override
@@ -105,15 +93,5 @@ public class LobbyClient extends AppCompatActivity implements CallBack {
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    public void wifiChanged() {
-
-    }
-
-    @Override
-    public void updateUI(int i) {
-
     }
 }
