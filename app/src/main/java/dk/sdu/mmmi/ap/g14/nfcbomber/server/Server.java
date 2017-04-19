@@ -30,7 +30,6 @@ public class Server {
     public Server(final int port, final CallBack callBack) {
         this.messages = new LinkedBlockingQueue<>();
         this.callBack = callBack;
-        final Server s = this;
         Thread serverThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -40,7 +39,7 @@ public class Server {
                     while (true) {
                         Socket clientSocket = serverSocket.accept();
 
-                        ConnectionToClient client = new ConnectionToClient(clientSocket, s);
+                        ConnectionToClient client = new ConnectionToClient(clientSocket, Server.this);
                         clientList.add(client);
                         client.start();
                         callBack.updateUI(clientSize());
