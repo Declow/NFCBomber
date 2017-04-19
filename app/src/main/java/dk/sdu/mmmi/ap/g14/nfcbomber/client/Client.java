@@ -52,14 +52,10 @@ public class Client implements CallBackWithArg {
         this.server.read();
     }
 
-    public void send(Object obj) {
-        server.write(obj);
-    }
-
     @Override
     public void message(Object obj) {
         try {
-            Log.wtf(TAG, "CallBack message: " + obj);
+            Log.v(TAG, "CallBack message: " + obj);
             messages.put(obj);
         } catch (InterruptedException e) {
             e.printStackTrace();

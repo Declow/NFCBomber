@@ -18,18 +18,15 @@ public class ConnectionToClient {
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private Socket socket;
-    private LinkedBlockingQueue<Object> messages;
     private Server server;
 
-    ConnectionToClient(Socket socket, final LinkedBlockingQueue<Object> messages, final Server server) throws IOException {
+    ConnectionToClient(Socket socket, final Server server) throws IOException {
         this.socket = socket;
-        this.messages = messages;
         this.server = server;
-
-        Log.wtf(TAG, "Object created");
     }
 
     public void start() {
+        //Check if client is alive
         Thread read = new Thread() {
             public void run() {
                 while(true) {
@@ -38,10 +35,8 @@ public class ConnectionToClient {
                             in = new ObjectInputStream(socket.getInputStream());
                         }
                         Object obj = in.readObject();
-                        Log.wtf(TAG, "Got message");
-                        messages.put(obj);
                     } catch (Exception e) {
-                        Log.wtf(TAG, e.getMessage());
+                        Log.e(TAG, e.getMessage());
                         remove();
                         break;
                     }
@@ -61,11 +56,10 @@ public class ConnectionToClient {
         try {
             if (out == null) {
                 out = new ObjectOutputStream(socket.getOutputStream());
-                Log.wtf(TAG, "Created new outputstream!");
             }
             out.writeObject(obj);
         } catch (Exception e) {
-            Log.wtf(TAG, "Unable to write to clients :(");
+            Log.e(TAG, "Unable to write to clients :(");
         }
     }
 }
