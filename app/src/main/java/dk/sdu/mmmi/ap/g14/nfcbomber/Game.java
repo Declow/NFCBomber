@@ -42,11 +42,6 @@ public class Game extends AppCompatActivity implements SensorEventListener {
                 sensorManager.SENSOR_DELAY_NORMAL);
         
         Log.wtf(TAG, "Timer val: " + bombTime);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         startTimer();
     }
 
