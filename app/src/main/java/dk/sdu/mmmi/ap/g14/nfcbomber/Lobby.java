@@ -182,7 +182,12 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
     }
 
     public void startGame(View v) {
-        server.sendToEveryConnectedDevice(new NetObject(new Random().nextInt(10) + 5, Com.START_GAME));
+        int bombTimer = new Random().nextInt(10) + 5;
+
+        server.sendToEveryConnectedDevice(new NetObject(bombTimer, Com.START_GAME));
+        Intent intent = new Intent(this, Game.class);
+        intent.putExtra(Game.BOMB_TIME_EXTRA, bombTimer);
+        startActivity(intent);
     }
 
 

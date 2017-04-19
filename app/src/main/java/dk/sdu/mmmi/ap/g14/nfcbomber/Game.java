@@ -40,7 +40,7 @@ public class Game extends AppCompatActivity implements SensorEventListener {
         sensorManager.registerListener(this,
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 sensorManager.SENSOR_DELAY_NORMAL);
-        
+
         Log.wtf(TAG, "Timer val: " + bombTime);
     }
 
