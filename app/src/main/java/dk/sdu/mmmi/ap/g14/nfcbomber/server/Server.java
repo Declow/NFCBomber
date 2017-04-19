@@ -64,7 +64,6 @@ public class Server {
                     for (ConnectionToClient client : clientList) {
                         client.write(obj);
                     }
-                    clientList.notify();
                 }
             }
         };

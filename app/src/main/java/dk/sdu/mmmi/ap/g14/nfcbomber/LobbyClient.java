@@ -61,7 +61,7 @@ public class LobbyClient extends AppCompatActivity {
             inet = (InetAddress) o;
             Log.wtf(TAG, inet.getHostAddress());
         } catch (Exception e) {
-            Log.wtf(TAG, "reading InetAddress failed :(");
+            Log.e(TAG, "reading InetAddress failed :(");
         }
 
         if (inet != null) {
@@ -73,7 +73,7 @@ public class LobbyClient extends AppCompatActivity {
         Thread clientThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Client c = new Client(inet, getApplicationContext().getResources().getInteger(R.integer.port), lobby);
+                new Client(inet, getApplicationContext().getResources().getInteger(R.integer.port), lobby);
             }
         });
 

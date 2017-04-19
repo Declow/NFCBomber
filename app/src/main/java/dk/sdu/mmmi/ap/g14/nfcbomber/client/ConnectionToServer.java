@@ -35,13 +35,13 @@ public class ConnectionToServer {
                     try {
                         if (in == null) {
                             in = new ObjectInputStream(socket.getInputStream());
-                            Log.wtf(TAG, "Created input stream!");
+                            Log.v(TAG, "Created input stream!");
                         }
                         Object obj = in.readObject();
-                        Log.wtf(TAG, "Got a message");
+                        Log.v(TAG, "Got a message");
                         callBack.message(obj);
                     } catch (IOException e) {
-                        Log.wtf(TAG, "IOException is: " + e.getMessage());
+                        Log.e(TAG, "IOException is: " + e.getMessage());
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -50,13 +50,4 @@ public class ConnectionToServer {
         };
         read.start();
     }
-
-    public void write(Object obj) {
-        try {
-            out.writeObject(obj);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
