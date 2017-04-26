@@ -2,7 +2,6 @@ package dk.sdu.mmmi.ap.g14.nfcbomber;
 
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Resources;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.nfc.NdefMessage;
@@ -44,7 +43,6 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
         setContentView(R.layout.activity_host);
 
         //wifiReceiver
-        Intent intent = getIntent();
         IntentFilter inf = new IntentFilter();
         inf.addAction("android.net.wifi.STATE_CHANGE");
 
@@ -77,13 +75,15 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
 
     //Check the state of wifi
     //return 0 equals to wifi not connected
-    private int checkWifi() {
+    private boolean checkWifi() {
         WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         WifiInfo wifiInfo = wifi.getConnectionInfo();
         int ip = wifiInfo.getIpAddress();
-        Log.wtf("WIFI ", Integer.toString(ip));
-        return ip;
+        if (ip != 0)
+            return true;
+        return false;
     }
+
 
     private InetAddress getInetAddress() {
         try {
@@ -110,7 +110,7 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
     public void wifiChanged() {
         TextView text = (TextView) findViewById(R.id.ip_address);
         Button b = (Button) findViewById(R.id.start_host);
-        if (checkWifi() != 0) {
+        if (checkWifi()) {
             text.setText(getLocalIpAddress());
             b.setEnabled(true);
         } else {
