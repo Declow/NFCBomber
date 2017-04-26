@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import dk.sdu.mmmi.ap.g14.nfcbomber.database.DbHelper;
 import dk.sdu.mmmi.ap.g14.nfcbomber.database.tables.UserStatsContract;
 import dk.sdu.mmmi.ap.g14.nfcbomber.util.StringUtil;
@@ -118,6 +120,7 @@ public class Game extends AppCompatActivity implements SensorEventListener {
 
         ContentValues values = new ContentValues();
         values.put(UserStatsContract.UserStats.COLUMN_GAME_TIME, bombTime);
+        values.put(UserStatsContract.UserStats.COLUMN_DATE, (int) new Date().getTime());
         values.put(UserStatsContract.UserStats.COLUMN_USER_STOP_TIME, (int) elapsedTime);
 
         db.insert(UserStatsContract.UserStats.TABLE_NAME, null, values);
