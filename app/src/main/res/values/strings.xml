@@ -23,5 +23,7 @@
     <string name="drop_info">Shake the phone to drop the bomb!</string>
     <string name="start_game">Start game</string>
     <string name="wait_for_host">Waiting for host to start Ze Game!</string>
+    <string name="highscore_headline">Highscore</string>
+    <string name="highscore_maintext">See the games you have played below, showing your time vs. the actual bomb time.</string>
     <string name="game_time_was">The random timer was</string>
 </resources>
