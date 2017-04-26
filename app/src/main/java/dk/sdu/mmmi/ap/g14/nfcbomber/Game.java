@@ -121,5 +121,8 @@ public class Game extends AppCompatActivity implements SensorEventListener {
         values.put(UserStatsContract.UserStats.COLUMN_USER_STOP_TIME, (int) elapsedTime);
 
         db.insert(UserStatsContract.UserStats.TABLE_NAME, null, values);
+
+        db.close();
+        helper.close();
     }
 }
