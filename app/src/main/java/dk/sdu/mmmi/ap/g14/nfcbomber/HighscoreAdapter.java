@@ -53,11 +53,12 @@ public class HighscoreAdapter extends RecyclerView.Adapter<HighscoreAdapter.View
 
         float difference = dataset[position].getBombTime() - dataset[position].getUserTime();
         difference = difference/1000; // Convert to seconds
+        String differenceString = difference < 0 ? "DEAD" : String.format("%.2f", difference) + " sec";
 
         holder.date_field.setText(date);
         holder.your_time.setText(userTime);
         holder.bomb_time.setText(bombTime);
-        holder.difference_time.setText(String.format("%.2f", difference) + " sec");
+        holder.difference_time.setText(differenceString);
 
     }
 
