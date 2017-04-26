@@ -19,6 +19,6 @@ public final class UserStatsContract {
                 "CREATE TABLE " + UserStats.TABLE_NAME + " (" +
                         UserStats._ID + " INTEGER PRIMARY KEY," +
                         UserStats.COLUMN_GAME_TIME + " INTEGER," +
-                        UserStats.COLUMN_USER_STOP_TIME + " INTEGER";
+                        UserStats.COLUMN_USER_STOP_TIME + " INTEGER);";
     }
 }

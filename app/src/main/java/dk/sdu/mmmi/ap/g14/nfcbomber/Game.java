@@ -10,11 +10,11 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import dk.sdu.mmmi.ap.g14.nfcbomber.database.DbHelper;
 import dk.sdu.mmmi.ap.g14.nfcbomber.database.tables.UserStatsContract;
+import dk.sdu.mmmi.ap.g14.nfcbomber.util.StringUtil;
 
 public class Game extends AppCompatActivity implements SensorEventListener {
 
@@ -31,7 +31,8 @@ public class Game extends AppCompatActivity implements SensorEventListener {
     private long elapsedTime;
     private int bombTime;
     private boolean timerRunning = false;
-    private TextView bomb_info;
+    private TextView bombInfo;
+    private StringUtil timeFormatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,8 @@ public class Game extends AppCompatActivity implements SensorEventListener {
 
         timerText = (TextView) findViewById(R.id.bomb_time);
         tHandler = new Handler();
-        bomb_info = (TextView) findViewById(R.id.bomb_info);
+        bombInfo = (TextView) findViewById(R.id.bomb_info);
+        timeFormatter = new StringUtil();
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(this,
@@ -50,40 +52,6 @@ public class Game extends AppCompatActivity implements SensorEventListener {
         
         Log.wtf(TAG, "Timer val: " + bombTime);
         startTimer();
-    }
-
-    private void updateTimer(float time) {
-        float secs = (long)(time/1000);
-        float mins = (long)((time/1000)/60);
-
-        /* Convert seconds to string */
-        secs = secs % 60;
-        String seconds = Integer.toString(Math.round(secs));
-        if(secs == 0){
-            seconds = "00";
-        }
-        if(secs <10 && secs > 0){
-            seconds = "0"+seconds;
-        }
-
-
-        /* Convert minutes to string */
-        mins = mins % 60;
-        String minutes = Integer.toString(Math.round(mins));
-        if(mins == 0){
-            minutes = "00";
-        }
-        if(mins <10 && mins > 0){
-            minutes = "0"+minutes;
-        }
-
-        /* Convert milliseconds */
-        String milliseconds = Integer.toString((int)(time/10) % 100);
-
-        if(milliseconds.length() == 1) {
-            milliseconds = "0"+milliseconds;
-        }
-        timerText.setText(minutes+":"+seconds+":"+milliseconds);
     }
 
     private Runnable timer = new Runnable() {
@@ -100,6 +68,11 @@ public class Game extends AppCompatActivity implements SensorEventListener {
             }
         }
     };
+
+    private void updateTimer(float time) {
+        String currentTime = timeFormatter.formatTime(time);
+        timerText.setText(currentTime);
+    }
 
     public void onAccuracyChanged(Sensor arg0, int arg1) { }
 
@@ -130,7 +103,7 @@ public class Game extends AppCompatActivity implements SensorEventListener {
             timerRunning = false;
         }
 
-        bomb_info.setText(getResources().getString(R.string.game_time_was) + bombTime);
+        bombInfo.setText(getResources().getString(R.string.game_time_was) + ": " + bombTime);
 
         writeToDb();
     }
@@ -140,7 +113,7 @@ public class Game extends AppCompatActivity implements SensorEventListener {
     }
 
     private void writeToDb() {
-        DbHelper helper = new DbHelper(getApplicationContext());
+        DbHelper helper = new DbHelper(this.getApplicationContext());
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
