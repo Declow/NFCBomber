@@ -26,4 +26,6 @@
     <string name="highscore_headline">Highscore</string>
     <string name="highscore_maintext">See the games you have played below, showing your time vs. the actual bomb time.</string>
     <string name="game_time_was">The random timer was</string>
+    <string name="stats_header">See stats for played games</string>
+    <string name="stats_button">Stats</string>
 </resources>

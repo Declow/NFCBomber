@@ -9,7 +9,7 @@ public class HighscoreItem {
 
     public HighscoreItem(int userTime, int bombTime, Date dateOfScore) {
         this.userTime = userTime;
-        this.bombTime = bombTime;
+        this.bombTime = bombTime * 1000;
         this.dateOfScore = dateOfScore;
     }
 

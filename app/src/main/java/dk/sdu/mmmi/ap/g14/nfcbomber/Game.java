@@ -86,7 +86,7 @@ public class Game extends AppCompatActivity implements SensorEventListener {
             double max = Math.max(Math.max(ax, ay), az);
 
             // int diff = (int) Math.abs(sum - oldsum);
-            if(max > DEFUSE_THRESHOLD) {
+            if(timerRunning && max > DEFUSE_THRESHOLD) {
                 stopTimer();
             }
         }
@@ -99,11 +99,9 @@ public class Game extends AppCompatActivity implements SensorEventListener {
     }
 
     private void stopTimer() {
-        if(timerRunning) {
-            tHandler.removeCallbacks(timer);
-            updateTimer(System.currentTimeMillis() - startTime);
-            timerRunning = false;
-        }
+        tHandler.removeCallbacks(timer);
+        updateTimer(System.currentTimeMillis() - startTime);
+        timerRunning = false;
 
         bombInfo.setText(getResources().getString(R.string.game_time_was) + ": " + bombTime);
 

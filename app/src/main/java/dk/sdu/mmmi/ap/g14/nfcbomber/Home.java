@@ -39,6 +39,11 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onStats(View v) {
+        Intent intent = new Intent(this, ScoreboardActivity.class);
+        startActivity(intent);
+    }
+
     private void nfc() {
         //NFC checker
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
