@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import dk.sdu.mmmi.ap.g14.nfcbomber.database.DbHelper;
@@ -52,7 +53,7 @@ public class Game extends AppCompatActivity implements SensorEventListener {
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 sensorManager.SENSOR_DELAY_NORMAL);
         
-        Log.wtf(TAG, "Timer val: " + bombTime);
+        Log.v(TAG, "Timer val: " + bombTime);
         startTimer();
     }
 
@@ -116,9 +117,11 @@ public class Game extends AppCompatActivity implements SensorEventListener {
         DbHelper helper = new DbHelper(this.getApplicationContext());
         SQLiteDatabase db = helper.getWritableDatabase();
 
+        Log.wtf(TAG, "" + new Date().getTime());
+
         ContentValues values = new ContentValues();
         values.put(UserStatsContract.UserStats.COLUMN_GAME_TIME, bombTime);
-        values.put(UserStatsContract.UserStats.COLUMN_DATE, (int) new Date().getTime());
+        values.put(UserStatsContract.UserStats.COLUMN_DATE, Long.toString(new Date().getTime()));
         values.put(UserStatsContract.UserStats.COLUMN_USER_STOP_TIME, (int) elapsedTime);
 
         db.insert(UserStatsContract.UserStats.TABLE_NAME, null, values);
