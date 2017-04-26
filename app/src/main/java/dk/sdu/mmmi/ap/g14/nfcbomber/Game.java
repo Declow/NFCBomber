@@ -63,7 +63,6 @@ public class Game extends AppCompatActivity implements SensorEventListener {
             elapsedTime = System.currentTimeMillis() - startTime;
             updateTimer(elapsedTime);
             if(elapsedTime >= bombTime*1000) {
-                timerRunning = false;
                 bombExplode();
             } else {
                 tHandler.postDelayed(this, REFRESH_RATE);
@@ -110,6 +109,7 @@ public class Game extends AppCompatActivity implements SensorEventListener {
 
     private void bombExplode() {
         timerText.setText("DEAD");
+        stopTimer();
     }
 
     private void writeToDb() {
