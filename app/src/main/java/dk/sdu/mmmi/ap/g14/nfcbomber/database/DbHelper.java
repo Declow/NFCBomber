@@ -29,12 +29,19 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(UserStatsContract.UserStats.SQL_CREATE_ENTRIES);
+        updateDb(db, 0, DATABASE_VERSION);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion == 1 && newVersion == 2) {
+        updateDb(db, oldVersion, newVersion);
+    }
+
+    private void updateDb(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion < 1) {
+            db.execSQL(UserStatsContract.UserStats.SQL_CREATE_ENTRIES);
+        }
+        if (oldVersion < 2) {
             db.execSQL(UserStatsContract.UserStats.SQL_UPGRADE_ENTRIES);
         }
     }
