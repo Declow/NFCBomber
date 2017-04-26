@@ -31,6 +31,7 @@ public class Game extends AppCompatActivity implements SensorEventListener {
     private long elapsedTime;
     private int bombTime;
     private boolean timerRunning = false;
+    private TextView bomb_info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class Game extends AppCompatActivity implements SensorEventListener {
 
         timerText = (TextView) findViewById(R.id.bomb_time);
         tHandler = new Handler();
+        bomb_info = (TextView) findViewById(R.id.bomb_info);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(this,
@@ -127,6 +129,9 @@ public class Game extends AppCompatActivity implements SensorEventListener {
             updateTimer(System.currentTimeMillis() - startTime);
             timerRunning = false;
         }
+
+        bomb_info.setText(getResources().getString(R.string.game_time_was) + bombTime);
+
         writeToDb();
     }
 
@@ -143,13 +148,5 @@ public class Game extends AppCompatActivity implements SensorEventListener {
         values.put(UserStatsContract.UserStats.COLUMN_USER_STOP_TIME, (int) elapsedTime);
 
         db.insert(UserStatsContract.UserStats.TABLE_NAME, null, values);
-    }
-
-    public void onStartTimer(View v) {
-        startTimer();
-    }
-
-    public void onStopTimer(View v) {
-        stopTimer();
     }
 }
