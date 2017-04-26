@@ -6,7 +6,7 @@ package dk.sdu.mmmi.ap.g14.nfcbomber.util;
 
 public class StringUtil {
 
-    public String formatTime(float time) {
+    public static String formatTime(float time) {
         float secs = (long)(time/1000);
         float mins = (long)((time/1000)/60);
 
