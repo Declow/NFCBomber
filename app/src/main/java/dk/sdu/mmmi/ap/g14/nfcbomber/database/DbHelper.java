@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import dk.sdu.mmmi.ap.g14.nfcbomber.database.tables.UserStatsContract;
 
 public class DbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "UserStats";
     private Context context;
 
@@ -41,9 +42,6 @@ public class DbHelper extends SQLiteOpenHelper {
         if (oldVersion < 1) {
             db.execSQL(UserStatsContract.UserStats.SQL_CREATE_ENTRIES);
         }
-        if (oldVersion < 2) {
-            db.execSQL(UserStatsContract.UserStats.SQL_UPGRADE_ENTRIES);
-        }
     }
 
     public ArrayList<HighscoreItem> readDb() {
@@ -58,9 +56,10 @@ public class DbHelper extends SQLiteOpenHelper {
             if (c.moveToFirst()) {
                 do {
                     int gameTime = c.getInt(c.getColumnIndex(UserStatsContract.UserStats.COLUMN_GAME_TIME));
-                    Date d = new Date(c.getInt(c.getColumnIndex(UserStatsContract.UserStats.COLUMN_DATE)));
+                    long i = Long.parseLong(c.getString(c.getColumnIndex(UserStatsContract.UserStats.COLUMN_DATE)));
+                    Date date = new Date(i);
                     int userStopTime = c.getInt(c.getColumnIndex(UserStatsContract.UserStats.COLUMN_USER_STOP_TIME));
-                    HighscoreItem hi = new HighscoreItem(userStopTime, gameTime, d);
+                    HighscoreItem hi = new HighscoreItem(userStopTime, gameTime, date);
                     highscoreList.add(hi);
                 } while (c.moveToNext());
             }

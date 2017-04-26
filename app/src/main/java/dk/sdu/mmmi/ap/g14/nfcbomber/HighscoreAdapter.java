@@ -46,7 +46,7 @@ public class HighscoreAdapter extends RecyclerView.Adapter<HighscoreAdapter.View
     @SuppressLint({"SimpleDateFormat", "DefaultLocale"})
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String date = dateFormat.format(dataset[position].getDateOfScore());
         String userTime = StringUtil.formatTime(dataset[position].getUserTime());
         String bombTime = StringUtil.formatTime(dataset[position].getBombTime());

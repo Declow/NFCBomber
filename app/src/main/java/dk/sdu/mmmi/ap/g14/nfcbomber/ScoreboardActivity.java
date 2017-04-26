@@ -41,7 +41,7 @@ public class ScoreboardActivity extends AppCompatActivity {
         helper.close();
 
         for (HighscoreItem item : items) {
-            System.out.println("bombtime: " + item.getBombTime());
+            System.out.println("bombtime: " + item.getDateOfScore());
         }
 
         return items.toArray(new HighscoreItem[items.size()]);
