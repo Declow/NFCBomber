@@ -109,8 +109,8 @@ public class Game extends AppCompatActivity implements SensorEventListener {
     }
 
     private void bombExplode() {
-        timerText.setText("DEAD");
         stopTimer();
+        timerText.setText("DEAD");
     }
 
     private void writeToDb() {

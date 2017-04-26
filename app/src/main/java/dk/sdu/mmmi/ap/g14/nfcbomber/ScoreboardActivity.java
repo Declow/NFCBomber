@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import dk.sdu.mmmi.ap.g14.nfcbomber.database.DbHelper;
 import dk.sdu.mmmi.ap.g14.nfcbomber.database.objects.HighscoreItem;
@@ -32,12 +33,12 @@ public class ScoreboardActivity extends AppCompatActivity {
         mAdapter = new HighscoreAdapter(readDb());
 
         recylerView.setAdapter(mAdapter);
-
     }
 
     private HighscoreItem[] readDb() {
         DbHelper helper = new DbHelper(this.getApplicationContext());
         ArrayList<HighscoreItem> items = helper.readDb();
+        Collections.reverse(items);
         helper.close();
 
         for (HighscoreItem item : items) {
