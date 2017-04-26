@@ -1,5 +1,7 @@
 package dk.sdu.mmmi.ap.g14.nfcbomber;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -10,6 +12,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import dk.sdu.mmmi.ap.g14.nfcbomber.database.DbHelper;
+import dk.sdu.mmmi.ap.g14.nfcbomber.database.tables.UserStatsContract;
 
 public class Game extends AppCompatActivity implements SensorEventListener {
 
@@ -122,10 +127,22 @@ public class Game extends AppCompatActivity implements SensorEventListener {
             updateTimer(System.currentTimeMillis() - startTime);
             timerRunning = false;
         }
+        writeToDb();
     }
 
     private void bombExplode() {
         timerText.setText("DEAD");
+    }
+
+    private void writeToDb() {
+        DbHelper helper = new DbHelper(getApplicationContext());
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(UserStatsContract.UserStats.COLUMN_GAME_TIME, bombTime);
+        values.put(UserStatsContract.UserStats.COLUMN_USER_STOP_TIME, (int) elapsedTime);
+
+        db.insert(UserStatsContract.UserStats.TABLE_NAME, null, values);
     }
 
     public void onStartTimer(View v) {
