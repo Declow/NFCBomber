@@ -6,13 +6,12 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import dk.sdu.mmmi.ap.g14.nfcbomber.database.DbHelper;
@@ -57,6 +56,9 @@ public class Game extends AppCompatActivity implements SensorEventListener {
         startTimer();
     }
 
+    /**
+     * Create a new runnable for the timer
+     */
     private Runnable timer = new Runnable() {
         @Override
         public void run() {
@@ -71,11 +73,22 @@ public class Game extends AppCompatActivity implements SensorEventListener {
         }
     };
 
+    /**
+     * Update UI timer
+     *
+     * @param time float
+     */
     private void updateTimer(float time) {
         String currentTime = timeFormatter.formatTime(time);
         timerText.setText(currentTime);
     }
 
+    /**
+     * Unused
+     * Required from implements {@link SensorEventListener}
+     * @param arg0
+     * @param arg1
+     */
     public void onAccuracyChanged(Sensor arg0, int arg1) { }
 
     public void onSensorChanged(SensorEvent event) {
@@ -92,12 +105,18 @@ public class Game extends AppCompatActivity implements SensorEventListener {
         }
     }
 
+    /**
+     * Start timer
+     */
     private void startTimer() {
         startTime = System.currentTimeMillis();
         tHandler.removeCallbacks(timer);
         tHandler.postDelayed(timer,10);
     }
 
+    /**
+     * Stop timer
+     */
     private void stopTimer() {
         tHandler.removeCallbacks(timer);
         updateTimer(System.currentTimeMillis() - startTime);
@@ -108,11 +127,17 @@ public class Game extends AppCompatActivity implements SensorEventListener {
         writeToDb();
     }
 
+    /**
+     * Stop timer and set text DEAD
+     */
     private void bombExplode() {
         stopTimer();
         timerText.setText("DEAD");
     }
 
+    /**
+     * Write current stats to the localDB
+     */
     private void writeToDb() {
         DbHelper helper = new DbHelper(this.getApplicationContext());
         SQLiteDatabase db = helper.getWritableDatabase();

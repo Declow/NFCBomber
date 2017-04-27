@@ -3,18 +3,12 @@ package dk.sdu.mmmi.ap.g14.nfcbomber;
 import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
-import android.nfc.NfcEvent;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
-import java.io.ByteArrayInputStream;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.net.InetAddress;
 
 public class Home extends AppCompatActivity {
 
@@ -33,17 +27,29 @@ public class Home extends AppCompatActivity {
         nfc();
     }
 
+    /**
+     * Show host lobby activity on click
+     *
+     * @param v
+     */
     public void onHost(View v) {
         Intent intent = new Intent(this, Lobby.class);
         intent.putExtra(GAME_SETUP, GAME_HOST);
         startActivity(intent);
     }
 
+    /**
+     * Show scoreboard activity on click
+     * @param v
+     */
     public void onStats(View v) {
         Intent intent = new Intent(this, ScoreboardActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Check if nfc is available
+     */
     private void nfc() {
         //NFC checker
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -52,7 +58,7 @@ public class Home extends AppCompatActivity {
             finish();
             return;
         } else {
-            Log.wtf(TAG, "NFC available");
+            Log.v(TAG, "NFC available");
         }
     }
 

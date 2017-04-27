@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by declow on 4/5/17.
@@ -26,7 +25,10 @@ public class ConnectionToClient {
     }
 
     public void start() {
-        //Check if client is alive
+        /**
+         * In case we want to read from the client
+         * Currently not in use!
+         */
         Thread read = new Thread() {
             public void run() {
                 while(true) {
@@ -52,6 +54,11 @@ public class ConnectionToClient {
         server.removeClient(this);
     }
 
+    /**
+     * Write object to client
+     *
+     * @param obj
+     */
     public void write(Object obj) {
         try {
             if (out == null) {

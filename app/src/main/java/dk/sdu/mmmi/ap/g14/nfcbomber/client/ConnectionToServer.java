@@ -7,8 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import dk.sdu.mmmi.ap.g14.nfcbomber.CallBack;
-import dk.sdu.mmmi.ap.g14.nfcbomber.CallBackWithArg;
+import dk.sdu.mmmi.ap.g14.nfcbomber.CallBackConnectionTo;
 
 /**
  * Created by declow on 4/5/17.
@@ -20,13 +19,18 @@ public class ConnectionToServer {
     ObjectInputStream in;
     ObjectOutputStream out;
     private final Socket socket;
-    CallBackWithArg callBack;
+    CallBackConnectionTo callBack;
 
-    public ConnectionToServer(final Socket socket, final CallBackWithArg callBack) {
+    public ConnectionToServer(final Socket socket, final CallBackConnectionTo callBack) {
         this.socket = socket;
         this.callBack = callBack;
     }
 
+    /**
+     * Creates a thread which reads from the server
+     * and puts the message into the message queue
+     * in the client
+     */
     public void read() {
         Thread read = new Thread() {
             @Override

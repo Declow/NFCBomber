@@ -1,8 +1,6 @@
 package dk.sdu.mmmi.ap.g14.nfcbomber.server;
 
-import android.telecom.Call;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -11,7 +9,6 @@ import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import dk.sdu.mmmi.ap.g14.nfcbomber.CallBack;
-import dk.sdu.mmmi.ap.g14.nfcbomber.server.ConnectionToClient;
 
 /**
  * Created by declow on 4/5/17.
@@ -30,6 +27,11 @@ public class Server {
     public Server(final int port, final CallBack callBack) {
         this.messages = new LinkedBlockingQueue<>();
         this.callBack = callBack;
+
+        /**
+         * Start server thread and accept incoming
+         * socket requests.
+         */
         Thread serverThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -55,6 +57,10 @@ public class Server {
         serverThread.setDaemon(true);
         serverThread.start();
 
+        /**
+         * Thread handling message reads
+         * Currenlt not in use!
+         */
         Thread handleMessages = new Thread() {
             public void run() {
                 while (true) {
@@ -69,10 +75,13 @@ public class Server {
 
         handleMessages.setDaemon(true);
         handleMessages.start();
-
-        //testMethod();
     }
 
+    /**
+     * Write msg to all clients
+     *
+     * @param obj
+     */
     public void sendToEveryConnectedDevice(final Object obj) {
         Thread t = new Thread() {
             @Override
@@ -88,12 +97,21 @@ public class Server {
         t.start();
     }
 
+    /**
+     * Get client list size
+     * @return int
+     */
     public int clientSize() {
         synchronized (clientList) {
             return clientList.size();
         }
     }
 
+    /**
+     * In case the client sends data.
+     * Currently not implemented
+     * @return
+     */
     synchronized private Object take() {
         try {
             return messages.take();
@@ -103,6 +121,10 @@ public class Server {
         return null;
     }
 
+    /**
+     * Remove client from client list
+     * @param client
+     */
     public void removeClient(ConnectionToClient client) {
         synchronized (clientList) {
             clientList.remove(client);

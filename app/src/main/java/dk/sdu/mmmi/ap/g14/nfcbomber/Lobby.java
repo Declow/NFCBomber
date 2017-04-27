@@ -8,8 +8,8 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -73,8 +73,11 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
         this.unregisterReceiver(receiver);
     }
 
-    //Check the state of wifi
-    //return 0 equals to wifi not connected
+    /**
+     * returns true if wifi is connected
+     *
+     * @return boolean
+     */
     private boolean checkWifi() {
         WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         WifiInfo wifiInfo = wifi.getConnectionInfo();
@@ -85,6 +88,10 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
     }
 
 
+    /**
+     * Gets Inet4Address
+     * @return Inet4Address
+     */
     private InetAddress getInetAddress() {
         try {
             for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
@@ -102,10 +109,18 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
         return null;
     }
 
+    /**
+     * Returns the ip address in human readable text
+     * @return String
+     */
     private String getLocalIpAddress() {
         return getInetAddress().getHostAddress();
     }
 
+    /**
+     * Enables host game button if
+     * wifi is connected
+     */
     @Override
     public void wifiChanged() {
         TextView text = (TextView) findViewById(R.id.ip_address);
@@ -119,6 +134,12 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
         }
     }
 
+    /**
+     * Update UI if a client connects
+     * and write the amount of users
+     * connected
+     * @param i
+     */
     @Override
     public void updateUI(final int i) {
         this.runOnUiThread(new Runnable() {
@@ -132,6 +153,11 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
         });
     }
 
+    /**
+     * Create NdefMessage
+     * @param e NfcEvent
+     * @return NdefMessage
+     */
     @Override
     public NdefMessage createNdefMessage(NfcEvent e) {
 
@@ -153,10 +179,17 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
                 });
     }
 
+    /**
+     * Creates the server
+     */
     private void createServer() {
         server = new Server(getApplicationContext().getResources().getInteger(R.integer.port), this);
     }
 
+    /**
+     * Starts the game activity
+     * @param v View
+     */
     public void startGame(View v) {
         int bombTimer = new Random().nextInt(10) + 5;
 

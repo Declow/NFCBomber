@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import dk.sdu.mmmi.ap.g14.nfcbomber.database.objects.HighscoreItem;
 import dk.sdu.mmmi.ap.g14.nfcbomber.util.StringUtil;
@@ -43,6 +42,12 @@ public class HighscoreAdapter extends RecyclerView.Adapter<HighscoreAdapter.View
         return vh;
     }
 
+    /**
+     * Insert data into view
+     *
+     * @param holder   ViewHolder
+     * @param position int
+     */
     @SuppressLint({"SimpleDateFormat", "DefaultLocale"})
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {

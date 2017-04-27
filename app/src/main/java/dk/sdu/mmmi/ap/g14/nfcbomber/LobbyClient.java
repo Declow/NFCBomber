@@ -11,11 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.net.InetAddress;
-import java.net.Socket;
 
 import dk.sdu.mmmi.ap.g14.nfcbomber.client.Client;
 
@@ -35,6 +33,9 @@ public class LobbyClient extends AppCompatActivity {
 
     }
 
+    /**
+     * Should generally be called from android beam
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -45,6 +46,11 @@ public class LobbyClient extends AppCompatActivity {
         }
     }
 
+    /**
+     * Reads NFC msg. Gets the INetAddress of the host and calls connectToHost
+     *
+     * @param intent
+     */
     private void processIntent(Intent intent) {
         Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
                 NfcAdapter.EXTRA_NDEF_MESSAGES);
@@ -69,6 +75,11 @@ public class LobbyClient extends AppCompatActivity {
         }
     }
 
+    /**
+     * Creates a new thread that connects to the host
+     * @param inet
+     * @param lobby
+     */
     private void connectToHost(final InetAddress inet, final LobbyClient lobby) {
         Thread clientThread = new Thread(new Runnable() {
             @Override
@@ -81,6 +92,11 @@ public class LobbyClient extends AppCompatActivity {
         clientThread.start();
     }
 
+    /**
+     * Called from a thread, which uses a handler to create
+     * a new activity (Has to be called from main UI thread).
+     * @param timer
+     */
     public void startGame(final int timer) {
 
         Handler handler = new Handler(Looper.getMainLooper());

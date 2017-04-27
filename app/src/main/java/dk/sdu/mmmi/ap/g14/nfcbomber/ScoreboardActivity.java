@@ -1,9 +1,7 @@
 package dk.sdu.mmmi.ap.g14.nfcbomber;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -35,6 +33,11 @@ public class ScoreboardActivity extends AppCompatActivity {
         recylerView.setAdapter(mAdapter);
     }
 
+    /**
+     * Reads the scoresboard from the local database
+     *
+     * @return HighscoreItem[]
+     */
     private HighscoreItem[] readDb() {
         DbHelper helper = new DbHelper(this.getApplicationContext());
         ArrayList<HighscoreItem> items = helper.readDb();
