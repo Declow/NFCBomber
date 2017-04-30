@@ -62,8 +62,8 @@ public class DbHelper extends SQLiteOpenHelper {
                     long i = Long.parseLong(c.getString(c.getColumnIndex(UserStatsContract.UserStats.COLUMN_DATE)));
                     Date date = new Date(i);
                     int userStopTime = c.getInt(c.getColumnIndex(UserStatsContract.UserStats.COLUMN_USER_STOP_TIME));
-                    HighscoreItem hi = new HighscoreItem(userStopTime, gameTime, date);
-                    highscoreList.add(hi);
+
+                    highscoreList.add(new HighscoreItem(userStopTime, gameTime, date));
                 } while (c.moveToNext());
             }
         }

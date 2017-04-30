@@ -29,7 +29,7 @@ public class ConnectionToClient {
          * In case we want to read from the client
          * Currently not in use!
          */
-        Thread read = new Thread() {
+        new Thread() {
             public void run() {
                 while(true) {
                     try {
@@ -38,16 +38,13 @@ public class ConnectionToClient {
                         }
                         Object obj = in.readObject();
                     } catch (Exception e) {
-                        Log.e(TAG, e.getMessage());
+                        Log.e(TAG, "Client DC");
                         remove();
                         break;
                     }
                 }
             }
-        };
-
-        read.setDaemon(true);
-        read.start();
+        }.start();
     }
 
     private void remove() {

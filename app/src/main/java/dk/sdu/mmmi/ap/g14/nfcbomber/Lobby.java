@@ -33,6 +33,8 @@ import dk.sdu.mmmi.ap.g14.nfcbomber.server.Server;
 public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.CreateNdefMessageCallback {
 
     private static final String TAG = "Lobby";
+    private int intervalTime = 5;
+    private int time = 10;
     WifiReceiver receiver;
     NfcAdapter mNfcAdapter;
     Server server;
@@ -191,7 +193,7 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
      * @param v View
      */
     public void startGame(View v) {
-        int bombTimer = new Random().nextInt(10) + 5;
+        int bombTimer = new Random().nextInt(time) + intervalTime;
 
         server.sendToEveryConnectedDevice(new NetObject(bombTimer, Com.START_GAME));
         Intent intent = new Intent(this, Game.class);

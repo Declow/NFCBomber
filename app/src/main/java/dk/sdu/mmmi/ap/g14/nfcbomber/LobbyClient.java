@@ -30,7 +30,6 @@ public class LobbyClient extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_lobby_client);
-
     }
 
     /**
@@ -67,29 +66,20 @@ public class LobbyClient extends AppCompatActivity {
             inet = (InetAddress) o;
             Log.wtf(TAG, inet.getHostAddress());
         } catch (Exception e) {
-            Log.e(TAG, "reading InetAddress failed :(");
+            Log.e(TAG, "reading InetAddress failed");
         }
 
         if (inet != null) {
-            connectToHost(inet, this);
+            connectToHost(inet);
         }
     }
 
     /**
      * Creates a new thread that connects to the host
      * @param inet
-     * @param lobby
      */
-    private void connectToHost(final InetAddress inet, final LobbyClient lobby) {
-        Thread clientThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                new Client(inet, getApplicationContext().getResources().getInteger(R.integer.port), lobby);
-            }
-        });
-
-        clientThread.setDaemon(true);
-        clientThread.start();
+    private void connectToHost(final InetAddress inet) {
+        new Client(inet, getApplicationContext().getResources().getInteger(R.integer.port), this);
     }
 
     /**

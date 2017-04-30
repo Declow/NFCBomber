@@ -21,7 +21,7 @@ import dk.sdu.mmmi.ap.g14.nfcbomber.util.StringUtil;
 public class Game extends AppCompatActivity implements SensorEventListener {
 
     private final int REFRESH_RATE = 10;
-    private final int DEFUSE_THRESHOLD = 20;
+    private final int DEFUSE_THRESHOLD = 15;
     public static final String BOMB_TIME_EXTRA = "bomb_time";
     private static final String TAG = "GAME";
 
@@ -34,7 +34,6 @@ public class Game extends AppCompatActivity implements SensorEventListener {
     private int bombTime;
     private boolean timerRunning = false;
     private TextView bombInfo;
-    private StringUtil timeFormatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +44,6 @@ public class Game extends AppCompatActivity implements SensorEventListener {
         timerText = (TextView) findViewById(R.id.bomb_time);
         tHandler = new Handler();
         bombInfo = (TextView) findViewById(R.id.bomb_info);
-        timeFormatter = new StringUtil();
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(this,
@@ -79,7 +77,7 @@ public class Game extends AppCompatActivity implements SensorEventListener {
      * @param time float
      */
     private void updateTimer(float time) {
-        String currentTime = timeFormatter.formatTime(time);
+        String currentTime = StringUtil.formatTime(time);
         timerText.setText(currentTime);
     }
 

@@ -2,6 +2,7 @@ package dk.sdu.mmmi.ap.g14.nfcbomber.client;
 
 import android.util.Log;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -30,41 +31,41 @@ public class Client implements CallBackConnectionTo {
      * @param port
      * @param lobby
      */
-    public Client(InetAddress inet, int port, LobbyClient lobby) {
+    public Client(final InetAddress inet, final int port, final LobbyClient lobby) {
         this.lobby = lobby;
-        try {
-            socket = new Socket(inet.getHostAddress(), port);
-            server = new ConnectionToServer(socket, this);
-            messages = new LinkedBlockingQueue<>();
+        messages = new LinkedBlockingQueue<>();
 
-            /**
-             * Start a thread which reads a message
-             * form the message queue
-             * and calls the right method
-             */
-            Thread read = new Thread() {
-                @Override
-                public void run() {
-                    while (true) {
-                        try {
-                            Object message = messages.take();
-                            determineState(message);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+        /**
+         * Start a thread which reads a message
+         * form the message queue
+         * and calls the right method
+         */
+        new Thread() {
+            @Override
+            public void run() {
+
+                try {
+                    socket = new Socket(inet.getHostAddress(), port);
+                } catch (IOException e) {
+                    Log.v(TAG, e.getMessage());
+                }
+                server = new ConnectionToServer(socket, Client.this);
+                server.read();
+
+                while (true) {
+                    try {
+                        Object message = messages.take();
+                        determineState(message);
+                    } catch (InterruptedException e) {
+                        Log.v(TAG, e.getMessage());
                     }
                 }
-            };
-            read.setDaemon(true);
-            read.start();
-        } catch (Exception e) {
-            Log.wtf(TAG, "Client failed somehow :(");
-        }
-        this.server.read();
+            }
+        }.start();
+
     }
 
     /**
-     *
      * @param obj
      */
     @Override

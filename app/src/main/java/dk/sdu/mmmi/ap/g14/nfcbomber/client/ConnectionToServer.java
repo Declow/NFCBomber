@@ -16,10 +16,10 @@ import dk.sdu.mmmi.ap.g14.nfcbomber.CallBackConnectionTo;
 public class ConnectionToServer {
     private static final String TAG = "CONNECTION_TO_SERVER";
 
-    ObjectInputStream in;
-    ObjectOutputStream out;
+    private ObjectInputStream in;
+    private ObjectOutputStream out;
     private final Socket socket;
-    CallBackConnectionTo callBack;
+    private CallBackConnectionTo callBack;
 
     public ConnectionToServer(final Socket socket, final CallBackConnectionTo callBack) {
         this.socket = socket;
@@ -32,7 +32,7 @@ public class ConnectionToServer {
      * in the client
      */
     public void read() {
-        Thread read = new Thread() {
+        new Thread() {
             @Override
             public void run() {
                 while(true) {
@@ -47,11 +47,10 @@ public class ConnectionToServer {
                     } catch (IOException e) {
                         Log.e(TAG, "IOException is: " + e.getMessage());
                     } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
+                        Log.v(TAG, "Class not found " + e.getMessage());
                     }
                 }
             }
-        };
-        read.start();
+        }.start();
     }
 }

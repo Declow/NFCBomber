@@ -32,7 +32,7 @@ public class Server {
          * Start server thread and accept incoming
          * socket requests.
          */
-        Thread serverThread = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -53,15 +53,13 @@ public class Server {
                     Log.wtf(TAG, e.getMessage());
                 }
             }
-        });
-        serverThread.setDaemon(true);
-        serverThread.start();
+        }).start();
 
         /**
          * Thread handling message reads
          * Currenlt not in use!
-         */
-        Thread handleMessages = new Thread() {
+
+         new Thread() {
             public void run() {
                 while (true) {
                     Object message = take();
@@ -71,19 +69,16 @@ public class Server {
                     }
                 }
             }
-        };
-
-        handleMessages.setDaemon(true);
-        handleMessages.start();
+         }.start();*/
     }
 
     /**
      * Write msg to all clients
      *
-     * @param obj
+     * @param obj -> send to every client
      */
     public void sendToEveryConnectedDevice(final Object obj) {
-        Thread t = new Thread() {
+        new Thread() {
             @Override
             public void run() {
                 synchronized (clientList) {
@@ -93,8 +88,7 @@ public class Server {
                     clientList.notify();
                 }
             }
-        };
-        t.start();
+        }.start();
     }
 
     /**
@@ -110,7 +104,7 @@ public class Server {
     /**
      * In case the client sends data.
      * Currently not implemented
-     * @return
+     * @return msg
      */
     synchronized private Object take() {
         try {
