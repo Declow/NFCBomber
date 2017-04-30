@@ -3,9 +3,8 @@ package dk.sdu.mmmi.ap.g14.nfcbomber.database.tables;
 import android.provider.BaseColumns;
 
 /**
- * Created by declow on 4/22/17.
+ * Contact for the database table used for local highscore tracking.
  */
-
 public final class UserStatsContract {
 
     private UserStatsContract() {}

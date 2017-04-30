@@ -11,9 +11,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 import dk.sdu.mmmi.ap.g14.nfcbomber.CallBack;
 
 /**
- * Created by declow on 4/5/17.
+ * Implementation of the server. Responsible for holding all connected clients, and informing them
+ * about game start and timer.
  */
-
 public class Server {
     private static final String TAG = "SERVER";
 

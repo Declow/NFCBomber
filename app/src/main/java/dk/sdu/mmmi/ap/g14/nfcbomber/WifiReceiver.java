@@ -5,9 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * Created by declow on 3/22/17.
+ * Broadcast Receiver for when WIFI state changes
  */
-
 public class WifiReceiver extends BroadcastReceiver {
 
 

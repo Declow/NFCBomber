@@ -12,6 +12,10 @@ import java.text.SimpleDateFormat;
 import dk.sdu.mmmi.ap.g14.nfcbomber.database.objects.HighscoreItem;
 import dk.sdu.mmmi.ap.g14.nfcbomber.util.StringUtil;
 
+/**
+ * Adapter for the Recycler View found in the {@link ScoreboardActivity}.
+ */
+
 public class HighscoreAdapter extends RecyclerView.Adapter<HighscoreAdapter.ViewHolder> {
     private HighscoreItem[] dataset;
 

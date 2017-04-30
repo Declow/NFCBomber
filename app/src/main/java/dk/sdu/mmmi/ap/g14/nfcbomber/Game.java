@@ -18,6 +18,10 @@ import dk.sdu.mmmi.ap.g14.nfcbomber.database.DbHelper;
 import dk.sdu.mmmi.ap.g14.nfcbomber.database.tables.UserStatsContract;
 import dk.sdu.mmmi.ap.g14.nfcbomber.util.StringUtil;
 
+/**
+ * Main GAME class - This implements the timer and "shake to drop bomb" functionality
+ */
+
 public class Game extends AppCompatActivity implements SensorEventListener {
 
     private final int REFRESH_RATE = 10;

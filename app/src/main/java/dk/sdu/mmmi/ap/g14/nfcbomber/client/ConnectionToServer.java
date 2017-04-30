@@ -10,9 +10,8 @@ import java.net.Socket;
 import dk.sdu.mmmi.ap.g14.nfcbomber.CallBackConnectionTo;
 
 /**
- * Created by declow on 4/5/17.
+ * Client-object responsible for the connection to the server.
  */
-
 public class ConnectionToServer {
     private static final String TAG = "CONNECTION_TO_SERVER";
 

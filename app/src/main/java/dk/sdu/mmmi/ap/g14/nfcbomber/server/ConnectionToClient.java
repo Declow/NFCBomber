@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
- * Created by declow on 4/5/17.
+ * Server-object that holds the connection from the server to the client.
  */
 
 public class ConnectionToClient {
@@ -19,16 +19,16 @@ public class ConnectionToClient {
     private Socket socket;
     private Server server;
 
-    ConnectionToClient(Socket socket, final Server server) throws IOException {
+    ConnectionToClient(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
     }
 
-    public void start() {
         /**
          * In case we want to read from the client
          * Currently not in use!
          */
+    public void start() {
         new Thread() {
             public void run() {
                 while(true) {

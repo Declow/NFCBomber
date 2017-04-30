@@ -12,9 +12,8 @@ import dk.sdu.mmmi.ap.g14.nfcbomber.LobbyClient;
 import dk.sdu.mmmi.ap.g14.nfcbomber.network.NetObject;
 
 /**
- * Created by declow on 4/5/17.
+ * Client-object responsible for the communication with the server
  */
-
 public class Client implements CallBackConnectionTo {
     private ConnectionToServer server;
     private Socket socket;

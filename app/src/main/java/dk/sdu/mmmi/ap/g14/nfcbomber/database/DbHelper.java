@@ -12,9 +12,8 @@ import dk.sdu.mmmi.ap.g14.nfcbomber.database.objects.HighscoreItem;
 import dk.sdu.mmmi.ap.g14.nfcbomber.database.tables.UserStatsContract;
 
 /**
- * Created by declow on 4/22/17.
+ * DatabaseHelper for the local SQLite database.
  */
-
 public class DbHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;

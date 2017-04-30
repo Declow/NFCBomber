@@ -1,9 +1,8 @@
 package dk.sdu.mmmi.ap.g14.nfcbomber.util;
 
 /**
- * Created by declow on 4/26/17.
+ * Utility functions for String convention
  */
-
 public class StringUtil {
 
     /**

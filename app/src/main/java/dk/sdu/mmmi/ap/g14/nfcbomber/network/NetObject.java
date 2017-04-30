@@ -3,9 +3,10 @@ package dk.sdu.mmmi.ap.g14.nfcbomber.network;
 import java.io.Serializable;
 
 /**
- * Created by declow on 4/17/17.
+ * Net-object to be sent from the server to the client om game start.
+ * Usage example (as used in {@link dk.sdu.mmmi.ap.g14.nfcbomber.Lobby)}:
+ *      new NetObject([BombTimer], [GameState]);
  */
-
 public class NetObject implements Serializable {
     private Object content;
     private Com type;
