@@ -11,6 +11,9 @@ import java.util.Collections;
 import dk.sdu.mmmi.ap.g14.nfcbomber.database.DbHelper;
 import dk.sdu.mmmi.ap.g14.nfcbomber.database.objects.HighscoreItem;
 
+/**
+ * Implements the Scoreboard with local times from the database
+ */
 public class ScoreboardActivity extends AppCompatActivity {
 
     private RecyclerView recylerView;

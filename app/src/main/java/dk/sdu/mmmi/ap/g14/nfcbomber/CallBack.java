@@ -1,7 +1,7 @@
 package dk.sdu.mmmi.ap.g14.nfcbomber;
 
 /**
- * Created by declow on 3/22/17.
+ * Interface to implement various callbacks
  */
 
 public interface CallBack {

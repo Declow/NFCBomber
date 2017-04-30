@@ -18,9 +18,9 @@ import java.net.InetAddress;
 import dk.sdu.mmmi.ap.g14.nfcbomber.client.Client;
 
 /**
- * Created by declow on 3/29/17.
+ * Implements the Lobby for the client
+ * Also holds the logic for receiving the NFC message from the host
  */
-
 public class LobbyClient extends AppCompatActivity {
 
     private static final String TAG = "GAME_LOBBY_CLIENT";

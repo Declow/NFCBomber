@@ -30,6 +30,9 @@ import dk.sdu.mmmi.ap.g14.nfcbomber.network.Com;
 import dk.sdu.mmmi.ap.g14.nfcbomber.network.NetObject;
 import dk.sdu.mmmi.ap.g14.nfcbomber.server.Server;
 
+/**
+ * Implements the lobby for the host
+ */
 public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.CreateNdefMessageCallback {
 
     private static final String TAG = "Lobby";

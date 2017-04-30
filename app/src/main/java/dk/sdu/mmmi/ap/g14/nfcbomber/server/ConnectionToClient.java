@@ -2,15 +2,13 @@ package dk.sdu.mmmi.ap.g14.nfcbomber.server;
 
 import android.util.Log;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
- * Created by declow on 4/5/17.
+ * Server-object that holds the connection from the server to the client.
  */
-
 public class ConnectionToClient {
 
     private static final String TAG = "ConnectionToClient";
@@ -19,16 +17,16 @@ public class ConnectionToClient {
     private Socket socket;
     private Server server;
 
-    ConnectionToClient(Socket socket, final Server server) throws IOException {
+    ConnectionToClient(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
     }
 
+    /**
+     * In case we want to read from the client
+     * Currently not in use!
+     */
     public void start() {
-        /**
-         * In case we want to read from the client
-         * Currently not in use!
-         */
         Thread read = new Thread() {
             public void run() {
                 while(true) {
