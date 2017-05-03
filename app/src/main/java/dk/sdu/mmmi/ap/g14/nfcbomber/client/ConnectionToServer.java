@@ -7,7 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import dk.sdu.mmmi.ap.g14.nfcbomber.CallBackConnectionTo;
+import dk.sdu.mmmi.ap.g14.nfcbomber.interfaces.IMessage;
+import dk.sdu.mmmi.ap.g14.nfcbomber.network.NetObject;
 
 /**
  * Client-object responsible for the connection to the server.
@@ -18,9 +19,9 @@ public class ConnectionToServer {
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private final Socket socket;
-    private CallBackConnectionTo callBack;
+    private IMessage callBack;
 
-    public ConnectionToServer(final Socket socket, final CallBackConnectionTo callBack) {
+    public ConnectionToServer(final Socket socket, final IMessage callBack) {
         this.socket = socket;
         this.callBack = callBack;
     }
@@ -37,12 +38,12 @@ public class ConnectionToServer {
                 while(true) {
                     try {
                         if (in == null) {
-                            in = new ObjectInputStream(socket.getInputStream());
+                            in = new ObjectInputStream(ConnectionToServer.this.socket.getInputStream());
                             Log.v(TAG, "Created input stream!");
                         }
                         Object obj = in.readObject();
                         Log.v(TAG, "Got a message");
-                        callBack.message(obj);
+                        callBack.message((NetObject) obj);
                     } catch (IOException e) {
                         Log.e(TAG, "IOException is: " + e.getMessage());
                     } catch (ClassNotFoundException e) {

@@ -7,17 +7,17 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import dk.sdu.mmmi.ap.g14.nfcbomber.CallBackConnectionTo;
+import dk.sdu.mmmi.ap.g14.nfcbomber.interfaces.IMessage;
 import dk.sdu.mmmi.ap.g14.nfcbomber.LobbyClient;
 import dk.sdu.mmmi.ap.g14.nfcbomber.network.NetObject;
 
 /**
  * Client-object responsible for the communication with the server
  */
-public class Client implements CallBackConnectionTo {
+public class Client implements IMessage {
     private ConnectionToServer server;
     private Socket socket;
-    private LinkedBlockingQueue<Object> messages;
+    private LinkedBlockingQueue<NetObject> messages;
     private LobbyClient lobby;
 
     private static final String TAG = "Client";
@@ -53,7 +53,7 @@ public class Client implements CallBackConnectionTo {
 
                 while (true) {
                     try {
-                        Object message = messages.take();
+                        NetObject message = messages.take();
                         determineState(message);
                     } catch (InterruptedException e) {
                         Log.v(TAG, e.getMessage());
@@ -65,15 +65,15 @@ public class Client implements CallBackConnectionTo {
     }
 
     /**
-     * @param obj
+     * @param message -> NetObject
      */
     @Override
-    public void message(Object obj) {
+    public void message(NetObject message) {
         try {
-            Log.v(TAG, "CallBack message: " + obj);
-            messages.put(obj);
+            Log.v(TAG, "CallBack message: " + message);
+            messages.put(message);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Log.v(TAG, "unable to put message");
         }
     }
 

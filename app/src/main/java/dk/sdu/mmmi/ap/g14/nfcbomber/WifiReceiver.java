@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import dk.sdu.mmmi.ap.g14.nfcbomber.interfaces.CallBack;
+
 /**
  * Broadcast Receiver for when WIFI state changes
  */

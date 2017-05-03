@@ -26,6 +26,7 @@ import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.Random;
 
+import dk.sdu.mmmi.ap.g14.nfcbomber.interfaces.CallBack;
 import dk.sdu.mmmi.ap.g14.nfcbomber.network.Com;
 import dk.sdu.mmmi.ap.g14.nfcbomber.network.NetObject;
 import dk.sdu.mmmi.ap.g14.nfcbomber.server.Server;
@@ -38,9 +39,9 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
     private static final String TAG = "Lobby";
     private int intervalTime = 5;
     private int time = 10;
-    WifiReceiver receiver;
-    NfcAdapter mNfcAdapter;
-    Server server;
+    private WifiReceiver receiver;
+    private NfcAdapter mNfcAdapter;
+    private Server server;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
     protected void onDestroy() {
         super.onDestroy();
         this.unregisterReceiver(receiver);
+        server.stop();
     }
 
     /**
@@ -203,6 +205,4 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
         intent.putExtra(Game.BOMB_TIME_EXTRA, bombTimer);
         startActivity(intent);
     }
-
-
 }

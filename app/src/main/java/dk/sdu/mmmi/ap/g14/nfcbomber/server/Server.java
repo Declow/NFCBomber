@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import dk.sdu.mmmi.ap.g14.nfcbomber.CallBack;
+import dk.sdu.mmmi.ap.g14.nfcbomber.interfaces.CallBack;
 
 /**
  * Implementation of the server. Responsible for holding all connected clients, and informing them
@@ -23,10 +23,12 @@ public class Server {
     private LinkedBlockingQueue<Object> messages;
 
     private CallBack callBack;
+    private boolean stop;
 
     public Server(final int port, final CallBack callBack) {
         this.messages = new LinkedBlockingQueue<>();
         this.callBack = callBack;
+        this.stop = false;
 
         /**
          * Start server thread and accept incoming
@@ -38,7 +40,7 @@ public class Server {
                 try {
                     serverSocket = new ServerSocket(port);
 
-                    while (true) {
+                    while (true && !stop) {
                         Socket clientSocket = serverSocket.accept();
 
                         ConnectionToClient client = new ConnectionToClient(clientSocket, Server.this);
@@ -46,30 +48,12 @@ public class Server {
                         client.start();
                         callBack.updateUI(clientSize());
                     }
-
-
                 } catch (IOException e) {
                     Log.wtf(TAG, "Unable To create server socket :(");
                     Log.wtf(TAG, e.getMessage());
                 }
             }
         }).start();
-
-        /**
-         * Thread handling message reads
-         * Currenlt not in use!
-
-         new Thread() {
-            public void run() {
-                while (true) {
-                    Object message = take();
-                    if (message != null) {
-                        Log.wtf(TAG, "Got message from Client");
-                        Log.wtf(TAG, (String) message);
-                    }
-                }
-            }
-         }.start();*/
     }
 
     /**
@@ -85,7 +69,6 @@ public class Server {
                     for (ConnectionToClient client : clientList) {
                         client.write(obj);
                     }
-                    clientList.notify();
                 }
             }
         }.start();
@@ -125,6 +108,16 @@ public class Server {
             callBack.updateUI(clientSize());
         }
 
+    }
+
+    public void stop() {
+        stop = true;
+        synchronized (clientList) {
+            for(ConnectionToClient client : clientList) {
+                client.stop();
+                clientList.remove(client);
+            }
+        }
     }
 
 }

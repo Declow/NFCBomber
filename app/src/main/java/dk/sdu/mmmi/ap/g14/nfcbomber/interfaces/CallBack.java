@@ -1,4 +1,4 @@
-package dk.sdu.mmmi.ap.g14.nfcbomber;
+package dk.sdu.mmmi.ap.g14.nfcbomber.interfaces;
 
 /**
  * Interface to implement various callbacks
