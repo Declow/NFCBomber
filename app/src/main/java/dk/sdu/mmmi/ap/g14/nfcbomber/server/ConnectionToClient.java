@@ -28,7 +28,6 @@ public class ConnectionToClient {
 
         /**
          * In case we want to read from the client
-         * Currently not in use!
          */
     public void start() {
         new Thread() {
