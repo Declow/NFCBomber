@@ -18,12 +18,10 @@ public class ConnectionToClient {
     private ObjectOutputStream out;
     private Socket socket;
     private Server server;
-    private boolean stop;
 
     ConnectionToClient(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
-        this.stop = false;
     }
 
         /**
@@ -32,7 +30,7 @@ public class ConnectionToClient {
     public void start() {
         new Thread() {
             public void run() {
-                while(true && !stop) {
+                while(true) {
                     try {
                         if (in == null) {
                             in = new ObjectInputStream(socket.getInputStream());
@@ -66,9 +64,5 @@ public class ConnectionToClient {
         } catch (Exception e) {
             Log.e(TAG, "Unable to write to clients :(");
         }
-    }
-
-    public void stop() {
-        stop = true;
     }
 }

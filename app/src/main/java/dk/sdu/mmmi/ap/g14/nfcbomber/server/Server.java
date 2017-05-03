@@ -23,12 +23,10 @@ public class Server {
     private LinkedBlockingQueue<Object> messages;
 
     private CallBack callBack;
-    private boolean stop;
 
     public Server(final int port, final CallBack callBack) {
         this.messages = new LinkedBlockingQueue<>();
         this.callBack = callBack;
-        this.stop = false;
 
         /**
          * Start server thread and accept incoming
@@ -40,7 +38,7 @@ public class Server {
                 try {
                     serverSocket = new ServerSocket(port);
 
-                    while (true && !stop) {
+                    while (true) {
                         Socket clientSocket = serverSocket.accept();
 
                         ConnectionToClient client = new ConnectionToClient(clientSocket, Server.this);
@@ -108,16 +106,6 @@ public class Server {
             callBack.updateUI(clientSize());
         }
 
-    }
-
-    public void stop() {
-        stop = true;
-        synchronized (clientList) {
-            for(ConnectionToClient client : clientList) {
-                client.stop();
-                clientList.remove(client);
-            }
-        }
     }
 
 }

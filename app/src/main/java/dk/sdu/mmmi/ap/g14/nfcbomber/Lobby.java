@@ -77,7 +77,6 @@ public class Lobby extends AppCompatActivity implements CallBack, NfcAdapter.Cre
     protected void onDestroy() {
         super.onDestroy();
         this.unregisterReceiver(receiver);
-        server.stop();
     }
 
     /**
